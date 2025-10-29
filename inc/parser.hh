@@ -5,6 +5,8 @@
 #include <sstream>
 #include <list>
 
+#include "libInterface.hh"
+
 /*!
 * \brief Klasa wykorzystywana do wczytywania i rozpoznawania komend wejściowych
 */
@@ -23,4 +25,7 @@ public:
     * \brief Funkcja do rozwijania makr i usuwania komentarzy z pliku wejściowego
     */
     bool preprocessFile(const char *fileName, std::istringstream &stream);
+
+    bool ReadCmdMove(std::istream &IStrm, std::list<std::string> &CmdLst);
+    bool ReadCmdRotate(std::istream &IStrm, std::list<std::string> &CmdLst);
 };
