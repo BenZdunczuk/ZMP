@@ -22,11 +22,19 @@
  */
 class Interp4Move: public AbstractInterp4Command {
   /*
-   *  Tu należy zdefiniować pola, które są niezbędne
-   *  do przechowywania wartości parametrów danego polecenia.
-   *  Ponieżej zdefiniowane jest tylko jedno pole jako przykład.
+   *  Nazwa obiektu
    */
-  double  _Speed_mmS;
+  std::string objectName;
+
+  /*
+   *  Szybkość liniowa
+   */
+  double verticalSpeed;
+
+  /*
+   *  Droga do przebycia
+   */
+  double distance;
  public:
   /*!
    * \brief

@@ -1,51 +1,58 @@
-#ifndef COMMAND4ROTATE_HH
-#define COMMAND4ROTATE_HH
+#ifndef  COMMAND4SET_HH
+#define  COMMAND4SET_HH
 
 #ifndef __GNUG__
-#pragma interface
-#pragma implementation
+# pragma interface
+# pragma implementation
 #endif
 
 #include "AbstractInterp4Command.hh"
 
 /*!
  * \file
- * \brief Definicja klasy Interp4Rotate
+ * \brief Definicja klasy Interp4Set
  *
- * Plik zawiera definicję klasy Interp4Rotate..
+ * Plik zawiera definicję klasy Interp4Set.
  */
 
 /*!
- * \brief Modeluje polecenie dla robota mobilnego, które wymusza jego ruch obrotowy
+ * \brief Modeluje polecenie dla robota mobilnego, które wymusza jego zatrzymanie
  */
-class Interp4Rotate : public AbstractInterp4Command
-{
+class Interp4Set: public AbstractInterp4Command {
 private:
-  /*
-   *  Nazwa obiektu
-   */
-  std::string objectName;
-
-  /*
-   *  Oś, wobec której wykonywany jest obrót
-   */
-  std::string axisName;
-
-  /*
-   *  Prędkość kątowa
-   */
-  double angularSpeed;
-
-  /*
-   * Kąr o jaki ma nastąpić obrót
-   */
-  double angle;
-
+    /*
+     * Nazwa obiektu
+     */
+    std::string objectName;
+    /*
+     * Położenie obiektu na osi X
+     */
+    double X;
+    /*
+     * Położenie obiektu na osi Y
+     */
+    double Y;
+    /*
+     * Położenie obiektu na osi Z
+     */
+    double Z;
+    /*
+     * Obrót obiektu na osi X
+     */
+    double OX;
+    /*
+     * Obrót obiektu na osi Y
+     */
+    double OY;
+    /*
+     * Obrót obiektu na osi Z
+     */
+    double OZ;
 public:
   /*!
-   * \brief
+   * \brief Konstruktor klasy Interp4Pause
    */
-  Interp4Rotate();
+  Interp4Set();
   /*!
    * \brief Wyświetla postać bieżącego polecenia (nazwę oraz wartości parametrów)
    */
@@ -90,4 +97,4 @@ public:
   static AbstractInterp4Command *CreateCmd();
 };
 
-#endif
+ #endif

@@ -2,7 +2,7 @@ Kompilacja z wykorzystaniem cmake jest realizowana w podstawowym wariancie,
 tzn.:
    1.  mkdir ../build
    2.  cd ../build
-   3.  cmake ../zalazek-cmake
+   3.  cmake ../ZMP
    4.  cmake --build .
    Uruchomienie programu:
        ./cmds_interpreter
