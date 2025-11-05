@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/home/ben/zad_zamp/inc",
-                "/home/ben/ZMP/inc"
+                "/home/ben/ZMP/inc",
+                "${workspaceFolder}/plugin/inc"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

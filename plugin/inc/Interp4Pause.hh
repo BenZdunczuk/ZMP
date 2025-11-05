@@ -25,7 +25,7 @@ private:
      */
     std::string objectName;
     /*
-     *  Czas przez jaki obiekt ma stać w ms
+     *  Czas przez jaki obiekt ma stać [milisekundy]
      */
     double pauseTime;
 public:

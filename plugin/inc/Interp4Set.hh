@@ -37,15 +37,15 @@ private:
      */
     double Z;
     /*
-     * Obrót obiektu na osi X
+     * Obrót obiektu względem osi X [stopnie]
      */
     double OX;
     /*
-     * Obrót obiektu na osi Y
+     * Obrót obiektu względem osi Y [stopnie]
      */
     double OY;
     /*
-     * Obrót obiektu na osi Z
+     * Obrót obiektu względem osi Z [stopnie]
      */
     double OZ;
 public:

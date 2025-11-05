@@ -32,12 +32,12 @@ private:
   std::string axisName;
 
   /*
-   *  Prędkość kątowa
+   *  Prędkość kątowa [stopnie/sekunda]
    */
   double angularSpeed;
 
   /*
-   * Kąr o jaki ma nastąpić obrót
+   * Kąt o jaki ma nastąpić obrót [stopnie]
    */
   double angle;
 
