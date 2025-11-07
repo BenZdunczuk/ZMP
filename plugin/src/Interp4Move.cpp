@@ -23,19 +23,24 @@ AbstractInterp4Command *CreateCmd(void)
 /*!
  *
  */
-Interp4Move::Interp4Move() : verticalSpeed(0)
+AbstractInterp4Command *Interp4Move::CreateCmd()
 {
+  return new Interp4Move();
 }
+
+// /*!
+//  *
+//  */
+// Interp4Move::Interp4Move() : verticalSpeed(0)
+// {
+// }
 
 /*!
  *
  */
 void Interp4Move::PrintCmd() const
 {
-  /*
-   *  Tu trzeba napisać odpowiednio zmodyfikować kod poniżej.
-   */
-  cout << GetCmdName() << " " << verticalSpeed << " 10  2" << endl;
+  cout << GetCmdName() << " " <<objectName<< " " << verticalSpeed  << " " << distance << endl;
 }
 
 /*!
@@ -66,19 +71,19 @@ bool Interp4Move::ReadParams(std::istream &Strm_CmdsList)
 {
   if (!(Strm_CmdsList >> objectName))
   {
-    std::cout << "Interp4Move: Niepoprawne wczytanie nazwy obiektu" << std::endl;
+    std::cout << "Interp4Move: Error when loading objectName" << std::endl;
     return false;
   }
 
   if (!(Strm_CmdsList >> verticalSpeed))
   {
-    std::cout << "Interp4Move: Niepoprawne wczytanie prędkości obiektu" << std::endl;
+    std::cout << "Interp4Move: Error when loading verticalSpeed" << std::endl;
     return false;
   }
 
   if (!(Strm_CmdsList >> distance))
   {
-    std::cout << "Interp4Move: Niepoprawne wczytanie dystansu" << std::endl;
+    std::cout << "Interp4Move: Error when loading distance" << std::endl;
     return false;
   }
 
@@ -88,15 +93,7 @@ bool Interp4Move::ReadParams(std::istream &Strm_CmdsList)
 /*!
  *
  */
-AbstractInterp4Command *Interp4Move::CreateCmd()
-{
-  return new Interp4Move();
-}
-
-/*!
- *
- */
 void Interp4Move::PrintSyntax() const
 {
-  cout << "   Move  NazwaObiektu  Szybkosc[m/s]  DlugoscDrogi[m]" << endl;
+  cout << "Move " << objectName << " Speed[m/s]: " << verticalSpeed << " Distance[m]: " << distance << endl;
 }

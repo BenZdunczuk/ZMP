@@ -27,27 +27,27 @@ private:
     /*
      * Położenie obiektu na osi X
      */
-    double X;
+    double Xpos;
     /*
      * Położenie obiektu na osi Y
      */
-    double Y;
+    double Ypos;
     /*
      * Położenie obiektu na osi Z
      */
-    double Z;
+    double Zpos;
     /*
      * Obrót obiektu względem osi X [stopnie]
      */
-    double OX;
+    double Xrot;
     /*
      * Obrót obiektu względem osi Y [stopnie]
      */
-    double OY;
+    double Yrot;
     /*
      * Obrót obiektu względem osi Z [stopnie]
      */
-    double OZ;
+    double Zrot;
 public:
   /*!
    * \brief Konstruktor klasy Interp4Pause
