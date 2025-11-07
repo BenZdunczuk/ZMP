@@ -11,7 +11,10 @@ add_executable(${PROJECT_NAME}
   src/pluginManager.cpp
   src/parser.cpp
   src/libInterface.cpp
+  src/xmlinterp.cpp
+  src/Vector3D.cpp
 )
+target_link_libraries(cmds_interpreter PRIVATE xerces-c)
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wl,-rpath=./plugin")
 add_custom_command(TARGET ${PROJ_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E echo ""

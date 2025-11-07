@@ -6,6 +6,7 @@
 #include <list>
 
 #include "libInterface.hh"
+#include "Configuration.hh"
 
 /*!
 * \brief Klasa wykorzystywana do wczytywania i rozpoznawania komend wejściowych
@@ -28,4 +29,6 @@ public:
 
     bool ReadCmdMove(std::istream &IStrm, std::list<std::string> &CmdLst);
     bool ReadCmdRotate(std::istream &IStrm, std::list<std::string> &CmdLst);
+
+    bool ReadFile(const char* sFileName, Configuration &rConfig);
 };
