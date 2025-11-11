@@ -17,18 +17,18 @@ private:
 
 
 public:
-    /*!
-    * \brief Funkcja parsująca plik wejściowy 
-    */
-    bool ReadCmdsList(std::istream &IStrm, std::list<std::string> &CmdLst);
+    // /*!
+    // * \brief Funkcja parsująca plik wejściowy 
+    // */
+    // bool ReadCmdsList(std::istream &IStrm, std::list<std::string> &CmdLst);
 
-    /*!
-    * \brief Funkcja do rozwijania makr i usuwania komentarzy z pliku wejściowego
-    */
-    bool preprocessFile(const char *fileName, std::istringstream &stream);
+    // /*!
+    // * \brief Funkcja do rozwijania makr i usuwania komentarzy z pliku wejściowego
+    // */
+    // bool preprocessFile(const char *fileName, std::istringstream &stream);
 
-    bool ReadCmdMove(std::istream &IStrm, std::list<std::string> &CmdLst);
-    bool ReadCmdRotate(std::istream &IStrm, std::list<std::string> &CmdLst);
+    // bool ReadCmdMove(std::istream &IStrm, std::list<std::string> &CmdLst);
+    // bool ReadCmdRotate(std::istream &IStrm, std::list<std::string> &CmdLst);
 
-    bool ReadFile(const char* sFileName, Configuration &rConfig);
+    bool ReadFile(const char *sFileName, Configuration &rConfig);
 };
