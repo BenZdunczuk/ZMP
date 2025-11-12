@@ -16,12 +16,16 @@
 class pluginManager
 {
     private:
+    
+
+    public:
     /*!
      * \brief Kolekcja bibliotek dynamicznych z poleceniami w parach nazwa polecenia - wskaźnik na interfejs biblioteki.
      */
     std::map<std::string, std::shared_ptr<LibInterface>> plugins;
 
-    public:
+    std::shared_ptr<LibInterface> findPlugin(std::string cmdName);
+
     /*!
      * \brief Funkcja inicjalizująca zestaw bibliotek.
      *

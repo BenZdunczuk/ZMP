@@ -13,7 +13,6 @@ LibInterface::LibInterface()
 bool LibInterface::init(const std::string &filename)
 {
     this->pLibHandler = dlopen(filename.c_str(), RTLD_LAZY);
-    void *pFun;
 
     if (!this->pLibHandler)
     {
@@ -21,6 +20,7 @@ bool LibInterface::init(const std::string &filename)
         return false;
     }
 
+    void *pFun;
     pFun = dlsym(this->pLibHandler, "CreateCmd");
     if (!pFun)
     {
