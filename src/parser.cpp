@@ -15,61 +15,6 @@ using namespace xercesc;
 
 #define LINE_SIZE 255
 
-// #define STR(x) #x
-// #define IF_CMD_THEN_READ(CmdName)                       \
-//     if (Keyword == STR(CmdName))                        \
-//     {                                                   \
-//         if (!ReadCmd##CmdName(IStrm, CmdLst))           \
-//             return false;                               \
-//         continue;                                       \
-//     }
-
-// bool Parser::ReadCmdsList(std::istream &IStrm, std::list<std::string> &CmdLst)
-// {
-//     std::string Keyword;
-//     while (IStrm >> Keyword)
-//     {
-//         IF_CMD_THEN_READ(Move)
-//         IF_CMD_THEN_READ(Rotate)
-//         IF_CMD_THEN_READ(Set)
-//         IF_CMD_THEN_READ(Pause)
-//         return false;
-//     }
-//     return true;
-// }
-
-// bool Parser::ReadCmdMove(std::istream &IStrm, std::list<std::string> &CmdLst){
-//     if(manager.plugins.find("Move")->second->getCMD()->ReadParams(IStrm)){
-//         manager.plugins.find("Move")->second->getCMD()->PrintParams();
-//         return true;
-//     }
-//     return false;
-// }
-
-// bool Parser::ReadCmdRotate(std::istream &IStrm, std::list<std::string> &CmdLst){
-//     if(manager.plugins.find("Rotate")->second->getCMD()->ReadParams(IStrm)){
-//         manager.plugins.find("Rotate")->second->getCMD()->PrintParams();
-//         return true;
-//     }
-//     return false;
-// }
-
-// bool Parser::ReadCmdSet(std::istream &IStrm, std::list<std::string> &CmdLst){
-//     if(manager.plugins.find("Set")->second->getCMD()->ReadParams(IStrm)){
-//         manager.plugins.find("Set")->second->getCMD()->PrintParams();
-//         return true;
-//     }
-//     return false;
-// }
-
-// bool Parser::ReadCmdPause(std::istream &IStrm, std::list<std::string> &CmdLst){
-//     if(manager.plugins.find("Pause")->second->getCMD()->ReadParams(IStrm)){
-//         manager.plugins.find("Pause")->second->getCMD()->PrintParams();
-//         return true;
-//     }
-//     return false;
-// }
-
 bool Parser::ReadCmd(std::istream &IStrm)
 {
     std::string Keyword;
@@ -105,7 +50,7 @@ std::string Parser::preprocessFile(const std::string &filename)
  * Czyta z pliku xml opis poleceń i dodaje je do listy komend,
  * które robot musi wykonać.
  * \param sFileName - (\b we.) nazwa pliku z opisem poleceń.
- * \param CmdList - (\b we.) zarządca listy poleceń dla robota.
+ * \param Configb we.) zarządca listy poleceń dla robota.
  * \retval true - jeśli wczytanie zostało zrealizowane poprawnie,
  * \retval false - w przeciwnym przypadku.
  */

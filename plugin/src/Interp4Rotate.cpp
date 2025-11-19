@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Interp4Rotate.hh"
+#include "ComInterface.hh"
 
 using std::cout;
 using std::endl;
@@ -43,17 +44,120 @@ const char *Interp4Rotate::GetCmdName() const
   return ::GetCmdName();
 }
 
-/*!
- *
- */
-bool Interp4Rotate::ExecCmd(AbstractScene &rScn,
-                            const char *sMobObjName,
-                            AbstractComChannel &rComChann)
+bool Interp4Rotate::ExecCmd( AbstractScene      &rScn, 
+                        const char         *sMobObjName,
+                        AbstractComChannel &rComChann )
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
-  return true;
+
+    AbstractMobileObj* wObMob = rScn.FindMobileObj(this->objectName.c_str());
+
+    if( wObMob == nullptr )
+    {
+        std::cerr<<"Nie mogę znaleźć obiektu: "<<this->objectName.c_str()<<std::endl;
+        return false;
+    }
+
+    if( this->axisName == "OX" )
+    {
+
+        double start = wObMob->GetAng_Pitch_deg();
+        double delta_deg = 0;
+        double dist_step_deg = (double)angle/N;
+        double time_step_us = (abs(((double)this->angle/this->angularSpeed))*1000000)/N;
+
+        for(int i = 0; i<N; ++i)
+        {
+            wObMob->LockAccess();
+            delta_deg += dist_step_deg;
+            wObMob->SetAng_Pitch_deg(delta_deg + start);
+
+            {
+                ComInterface interface(rComChann);
+
+                // send to server
+
+                if(!interface.UpdateObj(wObMob->GetName(),wObMob->GetPositoin_m(),Vector3D(wObMob->GetAng_Roll_deg(),wObMob->GetAng_Pitch_deg(),wObMob->GetAng_Yaw_deg())))
+                {
+                    std::cerr<<"Failed to update object: "<<wObMob->GetName()<<std::endl;
+                    wObMob->UnLockAccess();
+
+                    return false;
+                }
+            }
+            wObMob->UnLockAccess();
+
+            usleep(time_step_us);
+        }
+
+    }
+    else if( this->axisName == "OY" )
+    {
+        double start = wObMob->GetAng_Roll_deg();
+        double delta_deg = 0;
+        double dist_step_deg = (double)angle/N;
+        double time_step_us = ((abs((double)this->angle/this->angularSpeed))*1000000)/N;
+
+        for(int i = 0; i<N; ++i)
+        {
+            wObMob->LockAccess();
+            delta_deg += dist_step_deg;
+            wObMob->SetAng_Roll_deg(delta_deg + start);
+
+            {
+                ComInterface interface(rComChann);
+
+                // send to server
+
+                if(!interface.UpdateObj(wObMob->GetName(),wObMob->GetPositoin_m(),Vector3D(wObMob->GetAng_Roll_deg(),wObMob->GetAng_Pitch_deg(),wObMob->GetAng_Yaw_deg())))
+                {
+                    std::cerr<<"Failed to update object: "<<wObMob->GetName()<<std::endl;
+                    wObMob->UnLockAccess();
+
+                    return false;
+                }
+            }
+
+            wObMob->UnLockAccess();
+
+            usleep(time_step_us);
+        }
+
+    }
+    else if( this->axisName == "OZ" )
+    {
+        double start = wObMob->GetAng_Yaw_deg();
+        double delta_deg = 0;
+        double dist_step_deg = (double)angle/N;
+        double time_step_us = ((abs((double)this->angle/this->angularSpeed)*1000000))/N;
+
+        for(int i = 0; i<N; ++i)
+        {
+            wObMob->LockAccess();
+            delta_deg += dist_step_deg;
+            wObMob->SetAng_Yaw_deg(delta_deg + start);
+
+            {
+                ComInterface interface(rComChann);
+
+                // send to server
+
+                if(!interface.UpdateObj(wObMob->GetName(),wObMob->GetPositoin_m(),Vector3D(wObMob->GetAng_Roll_deg(),wObMob->GetAng_Pitch_deg(),wObMob->GetAng_Yaw_deg())))
+                {
+                    std::cerr<<"Failed to update object: "<<wObMob->GetName()<<std::endl;
+                    wObMob->UnLockAccess();
+
+                    return false;
+                }
+            }
+
+            wObMob->UnLockAccess();
+
+            usleep(time_step_us);
+        }
+
+    }
+
+    return true;
 }
 
 /*!

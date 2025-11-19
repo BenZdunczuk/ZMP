@@ -13,6 +13,9 @@ add_executable(${PROJECT_NAME}
   src/parser.cpp
   src/libInterface.cpp
   src/xmlinterp.cpp
+  src/Vector3D.cpp
+  src/ComInterface.cpp
+  src/Scene.cpp
 )
 target_link_libraries(cmds_interpreter xerces-c)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,-rpath=./plugin")

@@ -1,4 +1,6 @@
 #include <iostream>
+
+#include "ComInterface.hh"
 #include "Interp4Set.hh"
 
 using std::cout;
@@ -38,14 +40,41 @@ const char *Interp4Set::GetCmdName() const
 /*!
  *
  */
-bool Interp4Set::ExecCmd(AbstractScene &rScn,
-                          const char *sMobObjName,
-                          AbstractComChannel &rComChann)
+bool Interp4Set::ExecCmd( AbstractScene      &rScn, 
+                        const char         *sMobObjName,
+                        AbstractComChannel &rComChann )
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
-  return true;
+    AbstractMobileObj* wObMob = rScn.FindMobileObj(this->objectName.c_str());
+
+    if( wObMob == nullptr )
+    {
+        std::cerr<<"Nie mogę znaleźć obiektu: "<<this->objectName.c_str()<<std::endl;
+        return false;
+    }
+
+    wObMob->LockAccess();
+    
+
+    wObMob->SetPosition_m(Vector3D(Xpos, Ypos, Zpos));
+    wObMob->SetAng_Yaw_deg(Xrot);
+    wObMob->SetAng_Roll_deg(Yrot);
+    wObMob->SetAng_Roll_deg(Yrot);
+
+    ComInterface interface(rComChann);
+
+    // send to server
+
+    if(!interface.UpdateObj(wObMob->GetName(),wObMob->GetPositoin_m(),Vector3D(wObMob->GetAng_Roll_deg(),wObMob->GetAng_Pitch_deg(),wObMob->GetAng_Yaw_deg())))
+    {
+        std::cerr<<"Failed to update object: "<<wObMob->GetName()<<std::endl;
+        wObMob->UnLockAccess();
+
+        return false;
+    }
+
+    wObMob->UnLockAccess();
+        
+    return true;
 }
 
 /*!

@@ -1,5 +1,7 @@
 #include <iostream>
+#include <unistd.h>
 
+#include "ComInterface.hh"
 #include "Interp4Pause.hh"
 
 extern "C"
@@ -35,12 +37,14 @@ const char *Interp4Pause::GetCmdName() const
   return "Pause";
 }
 
-bool Interp4Pause::ExecCmd(AbstractScene &rScn,
-                           const char *sMobObjName,
-                           AbstractComChannel &rComChann)
+bool Interp4Pause::ExecCmd( AbstractScene      &rScn, 
+                        const char         *sMobObjName,
+                        AbstractComChannel &rComChann )
 {
 
-  return true;
+    usleep(pauseTime*1000);
+    
+    return true;
 }
 
 bool Interp4Pause::ReadParams(std::istream &Strm_CmdsList)

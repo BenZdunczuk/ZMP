@@ -1,5 +1,4 @@
-#ifndef ABSTRACTCOMCHANNEL_HH
-#define ABSTRACTCOMCHANNEL_HH
+#pragma once
 
 /*!
  * \file 
@@ -12,16 +11,23 @@
 
 #include <mutex>
 
+#include "AbstractComChannel.hh"
+
    /*!
     * \brief Definiuje interfejs kanału komunikacyjnego z serwerem graficznym.
     *
     * Definiuje interfejs kanału komunikacyjnego z serwerem graficznym.
     * Interfejs ma pozwalać na bezpieczną komunikację w programie wielowątkowym.
     */
-    class AbstractComChannel {
+    class ComChannel : public AbstractComChannel {
+
+      std::mutex _lock;
+
+      int _socket;
+
      public:
 
-      virtual ~AbstractComChannel() {}
+      ~ComChannel() {}
       
       /*!
        * \brief Inicjalizuje destryptor gniazda.
@@ -29,22 +35,34 @@
        * Inicjalizuje destryptora pliku skojarzonego z połączeniem sieciowym z serwerem.
        * \param[in] Socket - zawiera poprawny deskryptor.
        */
-       virtual void Init(int Socket) = 0;
+       void Init(int Socket)
+       {
+         this->_socket = Socket;
+       }
       /*!
        * \brief Udostępnia deskryptor pliku skojarzonego z połączeniem sieciowym z serwerem.
        *
        *  Udostępnia deskryptor skojarzonego z połączeniem sieciowym z serwerem.
        * \return Deskryptor pliku.
        */
-       virtual int GetSocket() const = 0;
+       int GetSocket() const
+       {
+         return this->_socket;
+       }
       /*!
        * \brief Zamyka dostęp gniazda.
        */
-       virtual void LockAccess() = 0;
+       void LockAccess()
+       {
+         this->_lock.lock();
+       }
       /*!
        * \brief Otwiera dostęp do gniazda.
        */
-       virtual void UnlockAccess() = 0;
+       void UnlockAccess()
+       {
+         this->_lock.unlock();
+       }
        /*!
         * \brief Udostępnia mutex w trybie modyfikacji.
         *
@@ -53,8 +71,8 @@
         *  np. poprzez klasę std::lock_gaurd, która daje możliwość
         *  bezpieczniejszego zamknięcia.
         */
-       virtual std::mutex &UseGuard() = 0;
+       std::mutex &UseGuard()
+       {
+         return this->_lock;
+       }
     };
-
-
-#endif

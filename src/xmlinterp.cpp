@@ -4,6 +4,9 @@
 #include <sstream>
 #include <cstdlib>
 #include <iostream>
+#include <cstring>
+
+#include "ConfigurationCuboid.hh"
 
 using namespace std;
 
@@ -12,6 +15,7 @@ using namespace std;
  * dodatkowe pola.
  */
 XMLInterp4Config::XMLInterp4Config(Configuration &rConfig)
+    : config(rConfig)
 {
 }
 
@@ -60,8 +64,30 @@ void XMLInterp4Config::ProcessLibAttrs(const xercesc::Attributes &rAttrs)
 
   // Tu trzeba wpisać własny kod ...
 
+  this->config.addPluginPath(sLibName);
+
   xercesc::XMLString::release(&sParamName);
   xercesc::XMLString::release(&sLibName);
+}
+
+static void load_vector(const char *str, Vector3D &vec)
+{
+  istringstream IStrm;
+
+  IStrm.str(str);
+  Vector3D scale;
+
+  IStrm >> vec;
+
+  if (IStrm.fail())
+  {
+    cerr << " Blad!!!" << endl;
+  }
+  else
+  {
+    cout << " Czytanie wartosci OK!!!" << endl;
+    cout << "     " << vec << endl;
+  }
 }
 
 /*!
@@ -83,22 +109,6 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes &rAttrs)
    */
 
   char *sName_Name = xercesc::XMLString::transcode(rAttrs.getQName(0));
-  char *sName_Scale = xercesc::XMLString::transcode(rAttrs.getQName(1));
-  char *sName_RGB = xercesc::XMLString::transcode(rAttrs.getQName(2));
-
-  XMLSize_t Index = 0;
-  char *sValue_Name = xercesc::XMLString::transcode(rAttrs.getValue(Index));
-  char *sValue_Scale = xercesc::XMLString::transcode(rAttrs.getValue(1));
-  char *sValue_RGB = xercesc::XMLString::transcode(rAttrs.getValue(2));
-
-  //-----------------------------------------------------------------------------
-  // Wyświetlenie nazw atrybutów i ich "wartości"
-  //
-  cout << " Atrybuty:" << endl
-       << "     " << sName_Name << " = \"" << sValue_Name << "\"" << endl
-       << "     " << sName_Scale << " = \"" << sValue_Scale << "\"" << endl
-       << "     " << sName_RGB << " = \"" << sValue_RGB << "\"" << endl
-       << endl;
   //-----------------------------------------------------------------------------
   // Przykład czytania wartości parametrów
   // Ten przykład jest zrobiony "na piechotę" wykorzystując osobne zmienne.
@@ -112,30 +122,58 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes &rAttrs)
   //
   // IStrm >> Scale;
   //
-  istringstream IStrm;
 
-  IStrm.str(sValue_Scale);
-  double Sx, Sy, Sz;
+  ConfigurationCuboid object;
 
-  IStrm >> Sx >> Sy >> Sz;
-  if (IStrm.fail())
+  if (strcmp(sName_Name, "Name") == 0)
   {
-    cerr << " Blad!!!" << endl;
+
+    char *sName_Value = xercesc::XMLString::transcode(rAttrs.getValue(static_cast<XMLSize_t>(0)));
+
+    object.name = sName_Value;
+
+    xercesc::XMLString::release(&sName_Value);
+
+    for (size_t i = 0; i < rAttrs.getLength(); ++i)
+    {
+      char *sName_Attr = xercesc::XMLString::transcode(rAttrs.getQName(i));
+      char *sValue_Attr = xercesc::XMLString::transcode(rAttrs.getValue(i));
+
+      if (strcmp(sName_Attr, "Shift") == 0)
+      {
+        load_vector(sValue_Attr, object.shift);
+      }
+      else if (strcmp(sName_Attr, "Scale") == 0)
+      {
+        load_vector(sValue_Attr, object.scale);
+      }
+      else if (strcmp(sName_Attr, "RotXYZ_deg") == 0)
+      {
+        load_vector(sValue_Attr, object.rotation);
+      }
+      else if (strcmp(sName_Attr, "Trans_m") == 0)
+      {
+        load_vector(sValue_Attr, object.trans);
+      }
+      else if (strcmp(sName_Attr, "RGB") == 0)
+      {
+        load_vector(sValue_Attr, object.color);
+      }
+
+      xercesc::XMLString::release(&sName_Attr);
+      xercesc::XMLString::release(&sValue_Attr);
+    }
   }
   else
   {
-    cout << " Czytanie wartosci OK!!!" << endl;
-    cout << "     " << Sx << "  " << Sy << "  " << Sz << endl;
+    cerr << "Błąd analizy atrybutów!" << endl;
   }
+
+  this->config.addObject(object);
 
   // Tu trzeba wstawić odpowiednio własny kod ...
 
   xercesc::XMLString::release(&sName_Name);
-  xercesc::XMLString::release(&sName_Scale);
-  xercesc::XMLString::release(&sName_RGB);
-  xercesc::XMLString::release(&sValue_Name);
-  xercesc::XMLString::release(&sValue_Scale);
-  xercesc::XMLString::release(&sValue_RGB);
 }
 
 /*!
@@ -276,7 +314,7 @@ void XMLInterp4Config::fatalError(const xercesc::SAXParseException &rException)
  */
 void XMLInterp4Config::error(const xercesc::SAXParseException &rException)
 {
-  cerr << "Blad ..." << endl;
+  cerr << "Blad gramatyki!!!" << endl;
 
   /*
    * Tutaj należy wstawić odpowiedni kod. Tekst wyświetlany powyżej
