@@ -1,9 +1,9 @@
-#ifndef  COMMAND4MOVE_HH
-#define  COMMAND4MOVE_HH
+#ifndef COMMAND4MOVE_HH
+#define COMMAND4MOVE_HH
 
 #ifndef __GNUG__
-# pragma interface
-# pragma implementation
+#pragma interface
+#pragma implementation
 #endif
 
 #include "AbstractInterp4Command.hh"
@@ -22,69 +22,70 @@
  *
  *  Klasa modeluj47e ...
  */
-class Interp4Move: public AbstractInterp4Command {
-  /*
-   *  Nazwa obiektu
-   */
-  std::string objectName;
+class Interp4Move : public AbstractInterp4Command
+{
+    /*
+     *  Nazwa obiektu
+     */
+    std::string objectName;
 
-  /*
-   *  Szybkość liniowa
-   */
-  int verticalSpeed;
+    /*
+     *  Szybkość liniowa
+     */
+    int verticalSpeed;
 
-  /*
-   *  Droga do przebycia
-   */
-  int distance;
- public:
-  /*!
-   * \brief
-   */
-  Interp4Move();  
-  /*!
-   * \brief Wyświetla postać bieżącego polecenia (nazwę oraz wartości parametrów)
-   */
-  virtual void PrintCmd() const override;
-  /*!
-   * \brief Wyświetla składnię polecenia
-   */
-  virtual void PrintSyntax() const override;
-  /*!
-   * \brief Wyświetla wartości wczytanych parametrów
-   */
-  virtual void PrintParams() const override {} 
+    /*
+     *  Droga do przebycia
+     */
+    int distance;
 
-  /*!
-   * \brief Wyświetla nazwę polecenia
-   */
-  virtual const char* GetCmdName() const override;
+public:
+    /*!
+     * \brief
+     */
+    Interp4Move();
+    /*!
+     * \brief Wyświetla postać bieżącego polecenia (nazwę oraz wartości parametrów)
+     */
+    virtual void PrintCmd() const override;
+    /*!
+     * \brief Wyświetla składnię polecenia
+     */
+    virtual void PrintSyntax() const override;
+    /*!
+     * \brief Wyświetla wartości wczytanych parametrów
+     */
+    virtual void PrintParams() const override {}
 
-  /*!
-   * \brief Wykonuje polecenie oraz wizualizuje jego realizację
-   *
-   * Wykonuje polecenie oraz wizualizuje jego realizację.
-   * \param[in,out]  rScn - scena zawierającą obiekty mobilne,
-   * \param[in]      sMobObjName - wskaźnik na nazwę lokalizującą i identyfikującą obiekt,
-   * \param[in,out]  rComChann - kanał komunikacyjny z serwerem graficznym.
-   * \retval true - operacja powiodła się,
-   * \retval false - w przypadku przeciwnym.
-   */
-  virtual bool ExecCmd( AbstractScene      &rScn, 
-                        const char         *sMobObjName,
-                        AbstractComChannel &rComChann ) override;
-  /*!
-   * \brief Czyta wartości parametrów danego polecenia
-   */
-  virtual bool ReadParams(std::istream& Strm_CmdsList) override;
+    /*!
+     * \brief Wyświetla nazwę polecenia
+     */
+    virtual const char *GetCmdName() const override;
 
-  
-  /*!
-   * \brief
-   *
-   *  Ta metoda nie musi być zdefiniowna w klasie bazowej.
-   */
-  static AbstractInterp4Command* CreateCmd();
- };
+    /*!
+     * \brief Wykonuje polecenie oraz wizualizuje jego realizację
+     *
+     * Wykonuje polecenie oraz wizualizuje jego realizację.
+     * \param[in,out]  rScn - scena zawierającą obiekty mobilne,
+     * \param[in]      sMobObjName - wskaźnik na nazwę lokalizującą i identyfikującą obiekt,
+     * \param[in,out]  rComChann - kanał komunikacyjny z serwerem graficznym.
+     * \retval true - operacja powiodła się,
+     * \retval false - w przypadku przeciwnym.
+     */
+    virtual bool ExecCmd(AbstractScene &rScn,
+                         const char *sMobObjName,
+                         AbstractComChannel &rComChann) override;
+    /*!
+     * \brief Czyta wartości parametrów danego polecenia
+     */
+    virtual bool ReadParams(std::istream &Strm_CmdsList) override;
+
+    /*!
+     * \brief
+     *
+     *  Ta metoda nie musi być zdefiniowna w klasie bazowej.
+     */
+    static AbstractInterp4Command *CreateCmd();
+};
 
 #endif

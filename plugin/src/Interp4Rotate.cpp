@@ -7,8 +7,8 @@ using std::endl;
 
 extern "C"
 {
-  AbstractInterp4Command *CreateCmd(void);
-  const char *GetCmdName() { return "Rotate"; }
+    AbstractInterp4Command *CreateCmd(void);
+    const char *GetCmdName() { return "Rotate"; }
 }
 
 /*!
@@ -18,7 +18,7 @@ extern "C"
  */
 AbstractInterp4Command *CreateCmd(void)
 {
-  return Interp4Rotate::CreateCmd();
+    return Interp4Rotate::CreateCmd();
 }
 
 /*!
@@ -26,7 +26,7 @@ AbstractInterp4Command *CreateCmd(void)
  */
 AbstractInterp4Command *Interp4Rotate::CreateCmd()
 {
-  return new Interp4Rotate();
+    return new Interp4Rotate();
 }
 
 /*!
@@ -41,31 +41,31 @@ Interp4Rotate::Interp4Rotate() : objectName(" "), angularSpeed(0), axisName(" ")
  */
 const char *Interp4Rotate::GetCmdName() const
 {
-  return ::GetCmdName();
+    return ::GetCmdName();
 }
 
-bool Interp4Rotate::ExecCmd( AbstractScene      &rScn, 
-                        const char         *sMobObjName,
-                        AbstractComChannel &rComChann )
+bool Interp4Rotate::ExecCmd(AbstractScene &rScn,
+                            const char *sMobObjName,
+                            AbstractComChannel &rComChann)
 {
 
-    AbstractMobileObj* wObMob = rScn.FindMobileObj(this->objectName.c_str());
+    AbstractMobileObj *wObMob = rScn.FindMobileObj(this->objectName.c_str());
 
-    if( wObMob == nullptr )
+    if (wObMob == nullptr)
     {
-        std::cerr<<"Nie mogę znaleźć obiektu: "<<this->objectName.c_str()<<std::endl;
+        std::cerr << "Nie mogę znaleźć obiektu: " << this->objectName.c_str() << std::endl;
         return false;
     }
 
-    if( this->axisName == "OX" )
+    if (this->axisName == "OX")
     {
 
         double start = wObMob->GetAng_Pitch_deg();
         double delta_deg = 0;
-        double dist_step_deg = (double)angle/N;
-        double time_step_us = (abs(((double)this->angle/this->angularSpeed))*1000000)/N;
+        double dist_step_deg = (double)angle / N;
+        double time_step_us = (abs(((double)this->angle / this->angularSpeed)) * 1000000) / N;
 
-        for(int i = 0; i<N; ++i)
+        for (int i = 0; i < N; ++i)
         {
             wObMob->LockAccess();
             delta_deg += dist_step_deg;
@@ -76,9 +76,9 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
 
                 // send to server
 
-                if(!interface.UpdateObj(wObMob->GetName(),wObMob->GetPositoin_m(),Vector3D(wObMob->GetAng_Roll_deg(),wObMob->GetAng_Pitch_deg(),wObMob->GetAng_Yaw_deg())))
+                if (!interface.UpdateObj(wObMob->GetName(), wObMob->GetPositoin_m(), Vector3D(wObMob->GetAng_Roll_deg(), wObMob->GetAng_Pitch_deg(), wObMob->GetAng_Yaw_deg())))
                 {
-                    std::cerr<<"Failed to update object: "<<wObMob->GetName()<<std::endl;
+                    std::cerr << "Failed to update object: " << wObMob->GetName() << std::endl;
                     wObMob->UnLockAccess();
 
                     return false;
@@ -88,16 +88,15 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
 
             usleep(time_step_us);
         }
-
     }
-    else if( this->axisName == "OY" )
+    else if (this->axisName == "OY")
     {
         double start = wObMob->GetAng_Roll_deg();
         double delta_deg = 0;
-        double dist_step_deg = (double)angle/N;
-        double time_step_us = ((abs((double)this->angle/this->angularSpeed))*1000000)/N;
+        double dist_step_deg = (double)angle / N;
+        double time_step_us = ((abs((double)this->angle / this->angularSpeed)) * 1000000) / N;
 
-        for(int i = 0; i<N; ++i)
+        for (int i = 0; i < N; ++i)
         {
             wObMob->LockAccess();
             delta_deg += dist_step_deg;
@@ -108,9 +107,9 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
 
                 // send to server
 
-                if(!interface.UpdateObj(wObMob->GetName(),wObMob->GetPositoin_m(),Vector3D(wObMob->GetAng_Roll_deg(),wObMob->GetAng_Pitch_deg(),wObMob->GetAng_Yaw_deg())))
+                if (!interface.UpdateObj(wObMob->GetName(), wObMob->GetPositoin_m(), Vector3D(wObMob->GetAng_Roll_deg(), wObMob->GetAng_Pitch_deg(), wObMob->GetAng_Yaw_deg())))
                 {
-                    std::cerr<<"Failed to update object: "<<wObMob->GetName()<<std::endl;
+                    std::cerr << "Failed to update object: " << wObMob->GetName() << std::endl;
                     wObMob->UnLockAccess();
 
                     return false;
@@ -121,16 +120,15 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
 
             usleep(time_step_us);
         }
-
     }
-    else if( this->axisName == "OZ" )
+    else if (this->axisName == "OZ")
     {
         double start = wObMob->GetAng_Yaw_deg();
         double delta_deg = 0;
-        double dist_step_deg = (double)angle/N;
-        double time_step_us = ((abs((double)this->angle/this->angularSpeed)*1000000))/N;
+        double dist_step_deg = (double)angle / N;
+        double time_step_us = ((abs((double)this->angle / this->angularSpeed) * 1000000)) / N;
 
-        for(int i = 0; i<N; ++i)
+        for (int i = 0; i < N; ++i)
         {
             wObMob->LockAccess();
             delta_deg += dist_step_deg;
@@ -141,9 +139,9 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
 
                 // send to server
 
-                if(!interface.UpdateObj(wObMob->GetName(),wObMob->GetPositoin_m(),Vector3D(wObMob->GetAng_Roll_deg(),wObMob->GetAng_Pitch_deg(),wObMob->GetAng_Yaw_deg())))
+                if (!interface.UpdateObj(wObMob->GetName(), wObMob->GetPositoin_m(), Vector3D(wObMob->GetAng_Roll_deg(), wObMob->GetAng_Pitch_deg(), wObMob->GetAng_Yaw_deg())))
                 {
-                    std::cerr<<"Failed to update object: "<<wObMob->GetName()<<std::endl;
+                    std::cerr << "Failed to update object: " << wObMob->GetName() << std::endl;
                     wObMob->UnLockAccess();
 
                     return false;
@@ -154,7 +152,6 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
 
             usleep(time_step_us);
         }
-
     }
 
     return true;
@@ -165,27 +162,27 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
  */
 bool Interp4Rotate::ReadParams(std::istream &Strm_CmdsList)
 {
-  if (!(Strm_CmdsList >> objectName))
-  {
-    std::cerr << "Interp4Rotate: Error when loading objectName" << std::endl;
-    return false;
-  }
-  if (!(Strm_CmdsList >> axisName))
-  {
-    std::cerr << "Interp4Rotate: Error when loading axis name" << std::endl;
-    return false;
-  }
-  if (!(Strm_CmdsList >> angularSpeed))
-  {
-    std::cerr << "Interp4Rotate: Error when loading angularSpeed" << std::endl;
-    return false;
-  }
-  if (!(Strm_CmdsList >> angle))
-  {
-    std::cerr << "Interp4Rotate: Error when loading angle" << std::endl;
-    return false;
-  }
-  return true;
+    if (!(Strm_CmdsList >> objectName))
+    {
+        std::cerr << "Interp4Rotate: Error when loading objectName" << std::endl;
+        return false;
+    }
+    if (!(Strm_CmdsList >> axisName))
+    {
+        std::cerr << "Interp4Rotate: Error when loading axis name" << std::endl;
+        return false;
+    }
+    if (!(Strm_CmdsList >> angularSpeed))
+    {
+        std::cerr << "Interp4Rotate: Error when loading angularSpeed" << std::endl;
+        return false;
+    }
+    if (!(Strm_CmdsList >> angle))
+    {
+        std::cerr << "Interp4Rotate: Error when loading angle" << std::endl;
+        return false;
+    }
+    return true;
 }
 
 /*!
@@ -193,7 +190,7 @@ bool Interp4Rotate::ReadParams(std::istream &Strm_CmdsList)
  */
 void Interp4Rotate::PrintSyntax() const
 {
-  cout << "Rotate " << "object_name" << " Axis"  << " Angular_speed[degrees/s]" << " Rotation_angle[degrees]" << endl;
+    cout << "Rotate " << "object_name" << " Axis" << " Angular_speed[degrees/s]" << " Rotation_angle[degrees]" << endl;
 }
 
 /*!
@@ -201,5 +198,5 @@ void Interp4Rotate::PrintSyntax() const
  */
 void Interp4Rotate::PrintCmd() const
 {
-  cout << GetCmdName() << " " << objectName << " " << axisName << " " << angularSpeed << " " << angle << endl;
+    cout << GetCmdName() << " " << objectName << " " << axisName << " " << angularSpeed << " " << angle << endl;
 }

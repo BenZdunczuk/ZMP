@@ -25,7 +25,7 @@ XMLInterp4Config::XMLInterp4Config(Configuration &rConfig)
  */
 void XMLInterp4Config::startDocument()
 {
-  cout << "*** Rozpoczecie przetwarzania dokumentu XML." << endl;
+    cout << "*** Rozpoczecie przetwarzania dokumentu XML." << endl;
 }
 
 /*!
@@ -34,7 +34,7 @@ void XMLInterp4Config::startDocument()
  */
 void XMLInterp4Config::endDocument()
 {
-  cout << "=== Koniec przetwarzania dokumentu XML." << endl;
+    cout << "=== Koniec przetwarzania dokumentu XML." << endl;
 }
 
 /*!
@@ -43,51 +43,51 @@ void XMLInterp4Config::endDocument()
  */
 void XMLInterp4Config::ProcessLibAttrs(const xercesc::Attributes &rAttrs)
 {
-  if (rAttrs.getLength() != 1)
-  {
-    cerr << "Zla ilosc atrybutow dla \"Lib\"" << endl;
-    exit(1);
-  }
+    if (rAttrs.getLength() != 1)
+    {
+        cerr << "Zla ilosc atrybutow dla \"Lib\"" << endl;
+        exit(1);
+    }
 
-  char *sParamName = xercesc::XMLString::transcode(rAttrs.getQName(0));
+    char *sParamName = xercesc::XMLString::transcode(rAttrs.getQName(0));
 
-  if (strcmp(sParamName, "Name"))
-  {
-    cerr << "Zla nazwa atrybutu dla Lib" << endl;
-    exit(1);
-  }
+    if (strcmp(sParamName, "Name"))
+    {
+        cerr << "Zla nazwa atrybutu dla Lib" << endl;
+        exit(1);
+    }
 
-  XMLSize_t Size = 0;
-  char *sLibName = xercesc::XMLString::transcode(rAttrs.getValue(Size));
+    XMLSize_t Size = 0;
+    char *sLibName = xercesc::XMLString::transcode(rAttrs.getValue(Size));
 
-  cout << "  Nazwa biblioteki: " << sLibName << endl;
+    cout << "  Nazwa biblioteki: " << sLibName << endl;
 
-  // Tu trzeba wpisać własny kod ...
+    // Tu trzeba wpisać własny kod ...
 
-  this->config.addPluginPath(sLibName);
+    this->config.addPluginPath(sLibName);
 
-  xercesc::XMLString::release(&sParamName);
-  xercesc::XMLString::release(&sLibName);
+    xercesc::XMLString::release(&sParamName);
+    xercesc::XMLString::release(&sLibName);
 }
 
 static void load_vector(const char *str, Vector3D &vec)
 {
-  istringstream IStrm;
+    istringstream IStrm;
 
-  IStrm.str(str);
-  Vector3D scale;
+    IStrm.str(str);
+    Vector3D scale;
 
-  IStrm >> vec;
+    IStrm >> vec;
 
-  if (IStrm.fail())
-  {
-    cerr << " Blad!!!" << endl;
-  }
-  else
-  {
-    cout << " Czytanie wartosci OK!!!" << endl;
-    cout << "     " << vec << endl;
-  }
+    if (IStrm.fail())
+    {
+        cerr << " Blad!!!" << endl;
+    }
+    else
+    {
+        cout << " Czytanie wartosci OK!!!" << endl;
+        cout << "     " << vec << endl;
+    }
 }
 
 /*!
@@ -97,83 +97,83 @@ static void load_vector(const char *str, Vector3D &vec)
  */
 void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes &rAttrs)
 {
-  if (rAttrs.getLength() < 1)
-  {
-    cerr << "Zla ilosc atrybutow dla \"Cube\"" << endl;
-    exit(1);
-  }
-
-  /*
-   *  Tutaj pobierane sa nazwy pierwszego i drugiego atrybuty.
-   *  Sprawdzamy, czy na pewno jest to Name i Value.
-   */
-
-  char *sName_Name = xercesc::XMLString::transcode(rAttrs.getQName(0));
-  //-----------------------------------------------------------------------------
-  // Przykład czytania wartości parametrów
-  // Ten przykład jest zrobiony "na piechotę" wykorzystując osobne zmienne.
-  // Skala powinna być wektorem. Czytanie powinno być rezlizowane z wykorzysaniem
-  // wektorów, np.
-  //
-  //
-  // istringstream IStrm;
-  // IStrm.str(sValue_Scale);
-  // Vector3D  Scale;
-  //
-  // IStrm >> Scale;
-  //
-
-  ConfigurationCuboid object;
-
-  if (strcmp(sName_Name, "Name") == 0)
-  {
-
-    char *sName_Value = xercesc::XMLString::transcode(rAttrs.getValue(static_cast<XMLSize_t>(0)));
-
-    object.name = sName_Value;
-
-    xercesc::XMLString::release(&sName_Value);
-
-    for (size_t i = 0; i < rAttrs.getLength(); ++i)
+    if (rAttrs.getLength() < 1)
     {
-      char *sName_Attr = xercesc::XMLString::transcode(rAttrs.getQName(i));
-      char *sValue_Attr = xercesc::XMLString::transcode(rAttrs.getValue(i));
-
-      if (strcmp(sName_Attr, "Shift") == 0)
-      {
-        load_vector(sValue_Attr, object.shift);
-      }
-      else if (strcmp(sName_Attr, "Scale") == 0)
-      {
-        load_vector(sValue_Attr, object.scale);
-      }
-      else if (strcmp(sName_Attr, "RotXYZ_deg") == 0)
-      {
-        load_vector(sValue_Attr, object.rotation);
-      }
-      else if (strcmp(sName_Attr, "Trans_m") == 0)
-      {
-        load_vector(sValue_Attr, object.trans);
-      }
-      else if (strcmp(sName_Attr, "RGB") == 0)
-      {
-        load_vector(sValue_Attr, object.color);
-      }
-
-      xercesc::XMLString::release(&sName_Attr);
-      xercesc::XMLString::release(&sValue_Attr);
+        cerr << "Zla ilosc atrybutow dla \"Cube\"" << endl;
+        exit(1);
     }
-  }
-  else
-  {
-    cerr << "Błąd analizy atrybutów!" << endl;
-  }
 
-  this->config.addObject(object);
+    /*
+     *  Tutaj pobierane sa nazwy pierwszego i drugiego atrybuty.
+     *  Sprawdzamy, czy na pewno jest to Name i Value.
+     */
 
-  // Tu trzeba wstawić odpowiednio własny kod ...
+    char *sName_Name = xercesc::XMLString::transcode(rAttrs.getQName(0));
+    //-----------------------------------------------------------------------------
+    // Przykład czytania wartości parametrów
+    // Ten przykład jest zrobiony "na piechotę" wykorzystując osobne zmienne.
+    // Skala powinna być wektorem. Czytanie powinno być rezlizowane z wykorzysaniem
+    // wektorów, np.
+    //
+    //
+    // istringstream IStrm;
+    // IStrm.str(sValue_Scale);
+    // Vector3D  Scale;
+    //
+    // IStrm >> Scale;
+    //
 
-  xercesc::XMLString::release(&sName_Name);
+    ConfigurationCuboid object;
+
+    if (strcmp(sName_Name, "Name") == 0)
+    {
+
+        char *sName_Value = xercesc::XMLString::transcode(rAttrs.getValue(static_cast<XMLSize_t>(0)));
+
+        object.name = sName_Value;
+
+        xercesc::XMLString::release(&sName_Value);
+
+        for (size_t i = 0; i < rAttrs.getLength(); ++i)
+        {
+            char *sName_Attr = xercesc::XMLString::transcode(rAttrs.getQName(i));
+            char *sValue_Attr = xercesc::XMLString::transcode(rAttrs.getValue(i));
+
+            if (strcmp(sName_Attr, "Shift") == 0)
+            {
+                load_vector(sValue_Attr, object.shift);
+            }
+            else if (strcmp(sName_Attr, "Scale") == 0)
+            {
+                load_vector(sValue_Attr, object.scale);
+            }
+            else if (strcmp(sName_Attr, "RotXYZ_deg") == 0)
+            {
+                load_vector(sValue_Attr, object.rotation);
+            }
+            else if (strcmp(sName_Attr, "Trans_m") == 0)
+            {
+                load_vector(sValue_Attr, object.trans);
+            }
+            else if (strcmp(sName_Attr, "RGB") == 0)
+            {
+                load_vector(sValue_Attr, object.color);
+            }
+
+            xercesc::XMLString::release(&sName_Attr);
+            xercesc::XMLString::release(&sValue_Attr);
+        }
+    }
+    else
+    {
+        cerr << "Błąd analizy atrybutów!" << endl;
+    }
+
+    this->config.addObject(object);
+
+    // Tu trzeba wstawić odpowiednio własny kod ...
+
+    xercesc::XMLString::release(&sName_Name);
 }
 
 /*!
@@ -188,17 +188,17 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes &rAttrs)
 void XMLInterp4Config::WhenStartElement(const std::string &rElemName,
                                         const xercesc::Attributes &rAttrs)
 {
-  if (rElemName == "Lib")
-  {
-    ProcessLibAttrs(rAttrs);
-    return;
-  }
+    if (rElemName == "Lib")
+    {
+        ProcessLibAttrs(rAttrs);
+        return;
+    }
 
-  if (rElemName == "Cube")
-  {
-    ProcessCubeAttrs(rAttrs);
-    return;
-  }
+    if (rElemName == "Cube")
+    {
+        ProcessCubeAttrs(rAttrs);
+        return;
+    }
 }
 
 /*!
@@ -230,12 +230,12 @@ void XMLInterp4Config::startElement(const XMLCh *const pURI,
                                     const XMLCh *const pQName,
                                     const xercesc::Attributes &rAttrs)
 {
-  char *sElemName = xercesc::XMLString::transcode(pLocalName);
-  cout << "+++ Poczatek elementu: " << sElemName << endl;
+    char *sElemName = xercesc::XMLString::transcode(pLocalName);
+    cout << "+++ Poczatek elementu: " << sElemName << endl;
 
-  WhenStartElement(sElemName, rAttrs);
+    WhenStartElement(sElemName, rAttrs);
 
-  xercesc::XMLString::release(&sElemName);
+    xercesc::XMLString::release(&sElemName);
 }
 
 /*!
@@ -268,14 +268,14 @@ void XMLInterp4Config::endElement(const XMLCh *const pURI,
                                   const XMLCh *const pLocalName,
                                   const XMLCh *const pQName)
 {
-  char *sURI = xercesc::XMLString::transcode(pURI);
-  char *sElemName = xercesc::XMLString::transcode(pLocalName);
-  char *sQName = xercesc::XMLString::transcode(pQName);
-  cout << "   URI: " << sURI << endl;
-  cout << " QName: " << sQName << endl;
-  cout << "----- Koniec elementu: " << sElemName << endl;
+    char *sURI = xercesc::XMLString::transcode(pURI);
+    char *sElemName = xercesc::XMLString::transcode(pLocalName);
+    char *sQName = xercesc::XMLString::transcode(pQName);
+    cout << "   URI: " << sURI << endl;
+    cout << " QName: " << sQName << endl;
+    cout << "----- Koniec elementu: " << sElemName << endl;
 
-  xercesc::XMLString::release(&sElemName);
+    xercesc::XMLString::release(&sElemName);
 }
 
 /*!
@@ -290,18 +290,18 @@ void XMLInterp4Config::endElement(const XMLCh *const pURI,
  */
 void XMLInterp4Config::fatalError(const xercesc::SAXParseException &rException)
 {
-  char *sMessage = xercesc::XMLString::transcode(rException.getMessage());
-  char *sSystemId = xercesc::XMLString::transcode(rException.getSystemId());
+    char *sMessage = xercesc::XMLString::transcode(rException.getMessage());
+    char *sSystemId = xercesc::XMLString::transcode(rException.getSystemId());
 
-  cerr << "Blad fatalny! " << endl
-       << "    Plik:  " << sSystemId << endl
-       << "   Linia: " << rException.getLineNumber() << endl
-       << " Kolumna: " << rException.getColumnNumber() << endl
-       << " Informacja: " << sMessage
-       << endl;
+    cerr << "Blad fatalny! " << endl
+         << "    Plik:  " << sSystemId << endl
+         << "   Linia: " << rException.getLineNumber() << endl
+         << " Kolumna: " << rException.getColumnNumber() << endl
+         << " Informacja: " << sMessage
+         << endl;
 
-  xercesc::XMLString::release(&sMessage);
-  xercesc::XMLString::release(&sSystemId);
+    xercesc::XMLString::release(&sMessage);
+    xercesc::XMLString::release(&sSystemId);
 }
 
 /*!
@@ -314,12 +314,12 @@ void XMLInterp4Config::fatalError(const xercesc::SAXParseException &rException)
  */
 void XMLInterp4Config::error(const xercesc::SAXParseException &rException)
 {
-  cerr << "Blad gramatyki!!!" << endl;
+    cerr << "Blad gramatyki!!!" << endl;
 
-  /*
-   * Tutaj należy wstawić odpowiedni kod. Tekst wyświetlany powyżej
-   * jest tylko "atrapą".
-   */
+    /*
+     * Tutaj należy wstawić odpowiedni kod. Tekst wyświetlany powyżej
+     * jest tylko "atrapą".
+     */
 }
 
 /*!
@@ -330,10 +330,10 @@ void XMLInterp4Config::error(const xercesc::SAXParseException &rException)
  */
 void XMLInterp4Config::warning(const xercesc::SAXParseException &rException)
 {
-  cerr << "Ostrzezenie ..." << endl;
+    cerr << "Ostrzezenie ..." << endl;
 
-  /*
-   * Tutaj należy wstawić odpowiedni kod. Tekst wyświetlany powyżej
-   * jest tylko "atrapą".
-   */
+    /*
+     * Tutaj należy wstawić odpowiedni kod. Tekst wyświetlany powyżej
+     * jest tylko "atrapą".
+     */
 }

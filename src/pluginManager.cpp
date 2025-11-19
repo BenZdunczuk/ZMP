@@ -19,6 +19,7 @@ void pluginManager::init(std::list<std::string> lib_paths)
     }
 }
 
-std::shared_ptr<LibInterface> pluginManager::findPlugin(std::string cmdName){
+std::shared_ptr<LibInterface> pluginManager::findPlugin(std::string cmdName)
+{
     return plugins.find(cmdName)->second;
 }
