@@ -29,12 +29,12 @@ class Interp4Move: public AbstractInterp4Command {
   /*
    *  Szybkość liniowa
    */
-  double verticalSpeed;
+  int verticalSpeed;
 
   /*
    *  Droga do przebycia
    */
-  double distance;
+  int distance;
  public:
   /*!
    * \brief

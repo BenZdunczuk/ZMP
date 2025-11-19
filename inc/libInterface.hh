@@ -16,17 +16,17 @@ private:
     /*!
      * \brief Uchwyt na załadowaną bilioteke.
      */
-    void *pLibHandler = nullptr;
+    void *pLibHandler;
 
     /*!
      * \brief Wskażnik na funkcję zwracająca nazwę biblioteki.
      */
-    const char *(*CmdName)(void) = nullptr;
+    const char *(*CmdName)(void);
 
     /*!
      * \brief Wskaźnik na funkcję tworzący nową instancję klasy z biblioteki dynamicznej.
      */
-    AbstractInterp4Command *(*pCreateCMD)(void) = nullptr;
+    AbstractInterp4Command *(*pCreateCMD)(void);
 
 public:
     /*!

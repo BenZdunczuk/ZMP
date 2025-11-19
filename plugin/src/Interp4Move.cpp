@@ -28,19 +28,12 @@ AbstractInterp4Command *Interp4Move::CreateCmd()
   return new Interp4Move();
 }
 
-// /*!
-//  *
-//  */
-// Interp4Move::Interp4Move() : verticalSpeed(0)
-// {
-// }
-
 /*!
  *
  */
-void Interp4Move::PrintCmd() const
+Interp4Move::Interp4Move() : verticalSpeed(0)
 {
-  cout << GetCmdName() << " " <<objectName<< " " << verticalSpeed  << " " << distance << endl;
+  // cout << "created move" << endl;
 }
 
 /*!
@@ -95,5 +88,13 @@ bool Interp4Move::ReadParams(std::istream &Strm_CmdsList)
  */
 void Interp4Move::PrintSyntax() const
 {
-  cout << "Move " << objectName << " Speed[m/s]: " << verticalSpeed << " Distance[m]: " << distance << endl;
+  cout << "Move" << " Object_name" << " Speed[m/s]" << " Distance[m]" << endl;
+}
+
+/*!
+ *
+ */
+void Interp4Move::PrintCmd() const
+{
+  cout << GetCmdName() << " " << objectName << "  " << verticalSpeed << " " << distance << endl;
 }

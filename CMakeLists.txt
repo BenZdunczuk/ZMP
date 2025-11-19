@@ -15,7 +15,7 @@ add_executable(${PROJECT_NAME}
   src/xmlinterp.cpp
 )
 target_link_libraries(cmds_interpreter xerces-c)
-set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wl,-rpath=./plugin")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,-rpath=./plugin")
 add_custom_command(TARGET ${PROJ_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E create_symlink ${PROJECT_SOURCE_DIR}/config config
     COMMAND ${CMAKE_COMMAND} -E echo ""

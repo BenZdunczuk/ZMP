@@ -28,22 +28,11 @@ AbstractInterp4Command *Interp4Rotate::CreateCmd()
   return new Interp4Rotate();
 }
 
-// /*!
-//  *
-//  */
-// Interp4Rotate::Interp4Rotate() : angularSpeed(0)
-// {
-// }
-
 /*!
  *
  */
-void Interp4Rotate::PrintCmd() const
+Interp4Rotate::Interp4Rotate() : objectName(" "), angularSpeed(0), axisName(" ")
 {
-  /*
-   *  Tu trzeba napisać odpowiednio zmodyfikować kod poniżej.
-   */
-  cout << GetCmdName() << " " << objectName << " " << angularSpeed << " " << axisName << " " << angle << endl;
 }
 
 /*!
@@ -100,5 +89,13 @@ bool Interp4Rotate::ReadParams(std::istream &Strm_CmdsList)
  */
 void Interp4Rotate::PrintSyntax() const
 {
-  cout << "Rotate " << objectName << " Axis: " << axisName << " Angular speed[degrees/s]: " << angularSpeed << " Rotation angle[degrees]: " << angle << endl;
+  cout << "Rotate " << "object_name" << " Axis"  << " Angular_speed[degrees/s]" << " Rotation_angle[degrees]" << endl;
+}
+
+/*!
+ *
+ */
+void Interp4Rotate::PrintCmd() const
+{
+  cout << GetCmdName() << " " << objectName << " " << axisName << " " << angularSpeed << " " << angle << endl;
 }

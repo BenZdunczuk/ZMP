@@ -27,7 +27,7 @@ private:
     /*
      *  Czas przez jaki obiekt ma stać [milisekundy]
      */
-    double pauseTime;
+    int pauseTime;
 public:
   /*!
    * \brief Konstruktor klasy Interp4Pause

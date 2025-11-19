@@ -26,6 +26,8 @@ class pluginManager
 
     std::shared_ptr<LibInterface> findPlugin(std::string cmdName);
 
+    AbstractInterp4Command *activePlugin;
+
     /*!
      * \brief Funkcja inicjalizująca zestaw bibliotek.
      *

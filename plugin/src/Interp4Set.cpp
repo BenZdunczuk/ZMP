@@ -20,19 +20,11 @@ AbstractInterp4Command *CreateCmd(void)
   return Interp4Set::CreateCmd();
 }
 
-// /*!
-//  *
-//  */
-// Interp4Set::Interp4Set() : verticalSpeed(0)
-// {
-// }
-
 /*!
  *
  */
-void Interp4Set::PrintCmd() const
+Interp4Set::Interp4Set() : objectName(" ")
 {
-   cout <<this->GetCmdName() <<" "<<objectName<<" "<<Xpos<<" "<<Ypos<<" "<<Zpos<<" "<<Xrot<<" "<<Yrot<<" "<<Zrot<<endl;
 }
 
 /*!
@@ -119,6 +111,13 @@ AbstractInterp4Command *Interp4Set::CreateCmd()
  */
 void Interp4Set::PrintSyntax() const
 {
-    std::cout << "Set " << objectName << " Xpos:" << Xpos << " Ypos:" << Ypos << " Zpos:" << Zpos 
-    << " Xrot" << Xrot << " Yrot" << Yrot << " Zrot" << Zrot << std::endl;
+    std::cout<<"Set"<<"object_name"<<" Xpos"<<" Ypos"<<" Zpos"<<" Xrot"<<" Yrot"<<" Zrot"<<std::endl;
+}
+
+/*!
+ *
+ */
+void Interp4Set::PrintCmd() const
+{
+   cout <<this->GetCmdName() <<" "<<objectName<<" "<<Xpos<<" "<<Ypos<<" "<<Zpos<<" "<<Xrot<<" "<<Yrot<<" "<<Zrot<<endl;
 }

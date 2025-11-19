@@ -7,10 +7,10 @@
 #include "pluginManager.hh"
 #include "Configuration.hh"
 
-#define PLUGIN_NAME__move "libInterp4Move.so"
-#define PLUGIN_NAME__rotate "home/ben/ZMP/libs/libInterp4Rotate.so"
+#define PLUGIN_NAME__move "./plugin/libInterp4Move.so"
+#define PLUGIN_NAME__rotate "./plugin/libInterp4Rotate.so"
 #define PLUGIN_NAME__set "./plugin/libInterp4Set.so"
-#define PLUGIN_NAME__pause "libInterp4Pause.so"
+#define PLUGIN_NAME__pause "./plugin/libInterp4Pause.so"
 
 using namespace std;
 
@@ -29,31 +29,22 @@ int main(int argc, char **argv){
   Parser p(manager);
   Configuration config;
 
-  if (argc < 2)
+  if (argc < 3)
   {
     cout << "No input file!" << endl;
     return 1;
   }
 
-  // if (!p.ReadFile(argv[1], config))
-  // {
-  //   return 1;
-  // }
-
-  list<string> cmdList;
-  // std::istringstream inputFile;
-
-  // if (p.preprocessFile(argv[1]))
-  // {
-  //   std::cout << "preprocess file" << std::endl;
-  //   return 1;
-  // }
-
-  std::string preprocessedFile = p.preprocessFile(argv[1]);
-  std::ifstream file(preprocessedFile);
-  if (!p.ReadCmd(file))
+  std::string preprocessedFileName = p.preprocessFile(argv[1]);
+  std::ifstream inputFileStrm(preprocessedFileName);
+  if (p.ReadCmd(inputFileStrm))
   {
-    std::cout << "read file" << std::endl;
-    return 1;
+    std::cout << "read file successful" << std::endl;
   }
+
+  if(p.ReadXMLFile(argv[2],config)){
+    std::cout << "read xml config file successful" << std::endl;
+  }
+
+  return 0;
 }

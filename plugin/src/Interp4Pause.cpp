@@ -25,14 +25,8 @@ AbstractInterp4Command *CreateCmd(void)
 }
 
 
-// Interp4Pause::Interp4Pause() : pauseTime(0)
-// {
-// }
-
-
-void Interp4Pause::PrintCmd() const
+Interp4Pause::Interp4Pause() : pauseTime(0)
 {
-  std::cout << this->GetCmdName() << " " << objectName << " " << pauseTime << std::endl;
 }
 
 const char *Interp4Pause::GetCmdName() const
@@ -51,11 +45,11 @@ bool Interp4Pause::ExecCmd(AbstractScene &rScn,
 
 bool Interp4Pause::ReadParams(std::istream &Strm_CmdsList)
 {
-  if (!(Strm_CmdsList >> objectName))
-  {
-    std::cerr << "Interp4Pause: Error when loading objectName" << std::endl;
-    return false;
-  }
+  // if (!(Strm_CmdsList >> objectName))
+  // {
+  //   std::cerr << "Interp4Pause: Error when loading objectName" << std::endl;
+  //   return false;
+  // }
   if (!(Strm_CmdsList >> pauseTime))
   {
     std::cerr << "Interp4Pause: Error when loading pauseTime" << std::endl;
@@ -67,5 +61,11 @@ bool Interp4Pause::ReadParams(std::istream &Strm_CmdsList)
 
 void Interp4Pause::PrintSyntax() const
 {
-  std::cout << "Object name: " << objectName << " Stop time[s]: " << pauseTime << std::endl;
+  // std::cout << "Object name: " << objectName << " Stop time[s]: " << pauseTime << std::endl;
+  std::cout << "Pause" << " Stop_time[s]" << std::endl;
+}
+
+void Interp4Pause::PrintCmd() const
+{
+  std::cout << GetCmdName() << " " << objectName << " " << pauseTime << std::endl;
 }

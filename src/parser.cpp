@@ -70,25 +70,32 @@ using namespace xercesc;
 //     return false;
 // }
 
-bool Parser::ReadCmd(std::istream &IStrm){
+bool Parser::ReadCmd(std::istream &IStrm)
+{
     std::string Keyword;
-    while(IStrm >> Keyword){
+    while (IStrm >> Keyword)
+    {
         std::shared_ptr<LibInterface> libHandler = manager.findPlugin(Keyword);
-        if(libHandler != nullptr){
-            if(!libHandler->getCMD()->ReadParams(IStrm)){
-                libHandler->getCMD()->PrintParams();
+        if (libHandler != nullptr)
+        {   
+            manager.activePlugin = libHandler->getCMD();
+            if (manager.activePlugin->ReadParams(IStrm))
+            {
+                manager.activePlugin->PrintSyntax();
+                manager.activePlugin->PrintCmd();
             }
         }
-        return false;
+        else
+            return false;
     }
     return true;
 }
 
-std::string Parser::preprocessFile(const std::string& filename)
+std::string Parser::preprocessFile(const std::string &filename)
 {
     std::string output_file = filename + ".tmp";
 
-    std::string cmd = "cpp -P "+filename+" -o "+output_file;
+    std::string cmd = "cpp -P " + filename + " -o " + output_file;
     system(cmd.c_str());
 
     return output_file;

@@ -34,12 +34,12 @@ private:
   /*
    *  Prędkość kątowa [stopnie/sekunda]
    */
-  double angularSpeed;
+  int angularSpeed;
 
   /*
    * Kąt o jaki ma nastąpić obrót [stopnie]
    */
-  double angle;
+  int angle;
 
 public:
   /*!
