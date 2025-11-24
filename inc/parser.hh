@@ -5,36 +5,46 @@
 #include <sstream>
 #include <list>
 
-// #include "libInterface.hh"
 #include "Configuration.hh"
 #include "pluginManager.hh"
+#include "ComChannel.hh"
+#include "Scene.hh"
 
 /*!
- * \brief Klasa wykorzystywana do wczytywania i rozpoznawania komend wejściowych
+ * \brief Klasa wykorzystywana do wczytywania i rozpoznawania komend oraz konfiguracji z plików wejściowych.
  */
 class Parser
 {
-private:
-    pluginManager manager;
-
 public:
-    Parser(pluginManager pM) { manager = pM; }
     /*!
-     * \brief Funkcja parsująca plik wejściowy
+     * \brief Konstruktor bezparametryczny.
      */
-    // bool ReadCmdsList(std::istream &IStrm, std::list<std::string> &CmdLst);
+    Parser(){}
+    
+    /*!
+     * \brief Funkcja do rozwijania makr i usuwania komentarzy z pliku wejściowego.
+     *
+     * \return Nazwa utworzonego nowego przepreprocessowanego pliku
+     */
+    std::string preprocessFile(const std::string &cmdsFileName);
 
     /*!
-     * \brief Funkcja do rozwijania makr i usuwania komentarzy z pliku wejściowego
+     * \brief Funkcja parsująca plik tekstowy z listą komend.
+     *
+     * \param[in] Config - obiekt przechowujący konfigurację
+     * \param[in] Config - obiekt przechowujący konfigurację
+     * 
+     * \return Czy operacja się powiodła (tak - true, nie - false).
      */
-    std::string preprocessFile(const std::string &filename);
+    bool ReadCmd(std::istream &IStrm, pluginManager manager,Scene &scene,ComChannel &channel);
 
-    bool ReadCmd(std::istream &IStrm);
-
-    // bool ReadCmdMove(std::istream &IStrm, std::list<std::string> &CmdLst);
-    // bool ReadCmdRotate(std::istream &IStrm, std::list<std::string> &CmdLst);
-    // bool ReadCmdSet(std::istream &IStrm, std::list<std::string> &CmdLst);
-    // bool ReadCmdPause(std::istream &IStrm, std::list<std::string> &CmdLst);
-
-    bool ReadXMLFile(const char *sFileName, Configuration &rConfig);
+    /*!
+     * \brief Funkcja parsująca plik xml z konfiguracją.
+     *
+     * \param[in] xmlFileName - nazwa(ścieżka) pliku xml z konfiguracją 
+     * \param[in] Config - obiekt przechowujący konfigurację
+     * 
+     * \return Czy operacja się powiodła (tak - true, nie - false).
+     */
+    bool ReadXMLFile(const std::string xmlFileName, Configuration &Config);
 };

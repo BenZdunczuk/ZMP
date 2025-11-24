@@ -2,9 +2,7 @@
 
 #include <string>
 #include <sstream>
-
 #include <cstring>
-
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -14,7 +12,6 @@
 
 /*!
  * \brief Klasa zapewniająca podstawowe polecenie dla serwera graficznego.
- * Klasa zapewniająca podstawowe polecenie dla serwera graficznego.
  */
 class ComInterface
 {
@@ -23,19 +20,21 @@ class ComInterface
 public:
     /*!
      * \brief Konstruktor klasy
-     * Konstruktor klasy, blokuje on muteks kanału komunikacyjnego
-     * \param _channel - referencja na kanał komunikacyjny z serwerem
+     *
+     * Blokuje muteks kanału komunikacyjnego.
+     * 
+     * \param _channel - referencja na kanał komunikacyjny z serwerem.
      */
     ComInterface(AbstractComChannel &_channel);
 
     /*!
      * \brief Funkcja dodająca obiekt do serwera
-     * Funkcja dodająca obiekt do serwera
-     * \param shift - przesunięcie obiektu
-     * \param scale - skala obietku
-     * \param trans - pozycja obiektu
-     * \param rotXYZ - obrót obiektu względem osi roll, pitch, yaw
-     * \param RGB - kolor obiektu
+     *
+     * \param[in] shift - przesunięcie obiektu
+     * \param[in] scale - skala obietku
+     * \param[in] trans - pozycja obiektu
+     * \param[in] rotXYZ - obrót obiektu względem kątów roll, pitch, yaw
+     * \param[in] RGB - kolor obiektu
      *
      * \return true jeśli polecenie zostało poprawnie wysłane do serwera, false w przeciwnym wypadku
      */
@@ -43,10 +42,10 @@ public:
 
     /*!
      * \brief Funkcja aktualizująca parametry obiektu.
-     * Funkcja aktualizująca parametry obiektu.
-     * \param name - nazwa obiektu
-     * \param trans - pozycja obiektu
-     * \param rotXYZ - obrót obiektu względem osi roll, pitch, yaw
+     *
+     * \param[in] name - nazwa obiektu
+     * \param[in] trans - pozycja obiektu
+     * \param[in] rotXYZ - obrót obiektu względem osi roll, pitch, yaw
      *
      * \return true jeśli polecenie zostało poprawnie wysłane do serwera, false w przeciwnym wypadku
      */
@@ -54,7 +53,6 @@ public:
 
     /*!
      * \brief Funkcja czyszcząca zawartość sceny serwera.
-     * Funkcja czyszcząca zawartość sceny serwera.
      *
      * \return true jeśli polecenie zostało poprawnie wysłane do serwera, false w przeciwnym wypadku
      */
@@ -62,7 +60,6 @@ public:
 
     /*!
      * \brief Funkcja zamykająca połączenie z serwerem.
-     * Funkcja zamykająca połączenie z serwerem.
      *
      * \return true jeśli polecenie zostało poprawnie wysłane do serwera, false w przeciwnym wypadku
      */
@@ -70,13 +67,17 @@ public:
 
     /*!
      * \brief Funkcja zwalniająca muteks kanału komunikacyjnego.
-     * Funkcja zwalniająca muteks kanału komunikacyjnego.
      */
     void Release()
     {
         this->channel.UnlockAccess();
     }
 
+    /*!
+     * \brief Destruktor klasy ComInterface
+     *
+     *  Zwalnia muteks kanału komunikacyjnego
+     */
     ~ComInterface()
     {
         this->channel.UnlockAccess();

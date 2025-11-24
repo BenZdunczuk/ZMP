@@ -12,13 +12,13 @@ bool ComInterface::AddObj(const std::string &name, const Vector3D &shift, const 
 
     std::ostringstream strWe;
 
-    strWe << "AddObj Name=" << name << " Shift=" << shift << " Scale=" << scale << " Trans_m=" << trans << " RGB=" << RGB << " RotXYZ_deg=" << rotXYZ << std::endl;
+    strWe << "AddObj Name=" << name << " Shift=" << shift << " Scale=" << scale << " Trans_m=" << trans << " RGB=" << RGB << " RotXYZ_deg=" << rotXYZ;
 
     msg = strWe.str();
 
     const int socket = this->channel.GetSocket();
 
-    std::cout << "Sending: " << msg << std::endl;
+    std::cout << "Sending: " << msg << "\n";
 
     if (write(socket, msg.c_str(), msg.length()) != msg.length())
     {
@@ -34,11 +34,11 @@ bool ComInterface::UpdateObj(const std::string &name, const Vector3D &trans, con
 
     std::ostringstream strWe;
 
-    strWe << "UpdateObj Name=" << name << " Trans_m=" << trans << " RotXYZ_deg=" << rotXYZ << std::endl;
+    strWe << "UpdateObj Name=" << name << " Trans_m=" << trans << " RotXYZ_deg=" << rotXYZ << "\n";
 
     msg = strWe.str();
 
-    std::cout << "Sending: " << msg << std::endl;
+    std::cout << "Sending: " << msg << "\n";
 
     const int socket = this->channel.GetSocket();
 

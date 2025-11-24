@@ -1,8 +1,5 @@
-#include <dlfcn.h>
 #include <iostream>
-#include <string>
 
-#include "AbstractInterp4Command.hh"
 #include "libInterface.hh"
 
 LibInterface::LibInterface()
@@ -10,13 +7,14 @@ LibInterface::LibInterface()
 {
 }
 
-bool LibInterface::init(const std::string &filename)
+bool LibInterface::loadPlugin(const std::string &libName)
 {
+    std::string filename = "./plugin/" + libName;
     this->pLibHandler = dlopen(filename.c_str(), RTLD_LAZY);
 
     if (!this->pLibHandler)
     {
-        std::cerr << "LibInterface: Error: can't find following library: " + filename << std::endl;
+        std::cerr << "LibInterface: Error: can't find following library: " + filename << "\n";
         return false;
     }
 
@@ -24,7 +22,7 @@ bool LibInterface::init(const std::string &filename)
     pFun = dlsym(this->pLibHandler, "CreateCmd");
     if (!pFun)
     {
-        std::cerr << "LibInterface: Error: no CreateCmd function found" << std::endl;
+        std::cerr << "LibInterface: Error: no CreateCmd function found" << "\n";
         return false;
     }
     this->pCreateCMD = reinterpret_cast<AbstractInterp4Command *(*)(void)>(pFun);
@@ -32,13 +30,13 @@ bool LibInterface::init(const std::string &filename)
     pFun = dlsym(this->pLibHandler, "GetCmdName");
     if (!pFun)
     {
-        std::cerr << "LibInterface: Error: no CreateCmd function found" << std::endl;
+        std::cerr << "LibInterface: Error: no CreateCmd function found" << "\n";
         return false;
     }
 
     if (!pFun)
     {
-        std::cerr << "LibInterface: Error: no GetCmdName function found!" << std::endl;
+        std::cerr << "LibInterface: Error: no GetCmdName function found!" << "\n";
         return false;
     }
 

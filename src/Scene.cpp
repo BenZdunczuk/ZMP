@@ -2,7 +2,7 @@
 
 Scene::~Scene()
 {
-    for (auto &pair : this->_objects)
+    for (auto &pair : this->objects)
     {
         delete pair.second;
     }
@@ -10,20 +10,20 @@ Scene::~Scene()
 
 AbstractMobileObj *Scene::FindMobileObj(const char *sName)
 {
-    if (this->_objects.count(sName) == 0)
+    if (this->objects.count(sName) == 0)
     {
         return nullptr;
     }
 
-    return this->_objects[sName];
+    return this->objects[sName];
 }
 
 void Scene::AddMobileObj(AbstractMobileObj *pMobObj)
 {
-    if ((pMobObj == nullptr) || (this->_objects.count(pMobObj->GetName())))
+    if ((pMobObj == nullptr) || (this->objects.count(pMobObj->GetName())))
     {
         return;
     }
 
-    this->_objects[pMobObj->GetName()] = pMobObj;
+    this->objects[pMobObj->GetName()] = pMobObj;
 }

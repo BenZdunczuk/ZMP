@@ -48,7 +48,7 @@ bool Interp4Set::ExecCmd(AbstractScene &rScn,
 
     if (wObMob == nullptr)
     {
-        std::cerr << "Nie mogę znaleźć obiektu: " << this->objectName.c_str() << std::endl;
+        std::cerr << "Error: Object not found: " << this->objectName.c_str() << "\n";
         return false;
     }
 
@@ -65,7 +65,7 @@ bool Interp4Set::ExecCmd(AbstractScene &rScn,
 
     if (!interface.UpdateObj(wObMob->GetName(), wObMob->GetPositoin_m(), Vector3D(wObMob->GetAng_Roll_deg(), wObMob->GetAng_Pitch_deg(), wObMob->GetAng_Yaw_deg())))
     {
-        std::cerr << "Failed to update object: " << wObMob->GetName() << std::endl;
+        std::cerr << "Error: Failed to update object: " << wObMob->GetName() << "\n";
         wObMob->UnLockAccess();
 
         return false;
@@ -83,43 +83,43 @@ bool Interp4Set::ReadParams(std::istream &Strm_CmdsList)
 {
     if (!(Strm_CmdsList >> objectName))
     {
-        std::cout << "Interp4Set: Error when loading objectName" << std::endl;
+        std::cout << "Interp4Set: Error when loading objectName\n";
         return false;
     }
 
     if (!(Strm_CmdsList >> Xpos))
     {
-        std::cout << "Interp4Set: Error when loading position on X axis" << std::endl;
+        std::cout << "Interp4Set: Error when loading position on X axis\n";
         return false;
     }
 
     if (!(Strm_CmdsList >> Ypos))
     {
-        std::cout << "Interp4Set: NError when loading position on Y axis" << std::endl;
+        std::cout << "Interp4Set: NError when loading position on Y axis\n";
         return false;
     }
 
     if (!(Strm_CmdsList >> Zpos))
     {
-        std::cout << "Interp4Set: Error when loading position on Z axis" << std::endl;
+        std::cout << "Interp4Set: Error when loading position on Z axis\n";
         return false;
     }
 
     if (!(Strm_CmdsList >> Xrot))
     {
-        std::cout << "Interp4Set: Error when rotation position on X axis" << std::endl;
+        std::cout << "Interp4Set: Error when rotation position on X axis\n";
         return false;
     }
 
     if (!(Strm_CmdsList >> Yrot))
     {
-        std::cout << "Interp4Set: Error when loading rotation on Y axis" << std::endl;
+        std::cout << "Interp4Set: Error when loading rotation on Y axis\n";
         return false;
     }
 
     if (!(Strm_CmdsList >> Zrot))
     {
-        std::cout << "Interp4Set: Error when loading rotation on Z axis" << std::endl;
+        std::cout << "Interp4Set: Error when loading rotation on Z axis\n";
         return false;
     }
 
@@ -139,7 +139,7 @@ AbstractInterp4Command *Interp4Set::CreateCmd()
  */
 void Interp4Set::PrintSyntax() const
 {
-    std::cout << "Set" << "object_name" << " Xpos" << " Ypos" << " Zpos" << " Xrot" << " Yrot" << " Zrot" << std::endl;
+    std::cout << "Set" << " object_name" << " Xpos" << " Ypos" << " Zpos" << " Xrot" << " Yrot" << " Zrot\n";
 }
 
 /*!
@@ -147,5 +147,5 @@ void Interp4Set::PrintSyntax() const
  */
 void Interp4Set::PrintCmd() const
 {
-    cout << this->GetCmdName() << " " << objectName << " " << Xpos << " " << Ypos << " " << Zpos << " " << Xrot << " " << Yrot << " " << Zrot << endl;
+    cout << this->GetCmdName() << " " << objectName << " " << Xpos << " " << Ypos << " " << Zpos << " " << Xrot << " " << Yrot << " " << Zrot << "\n";
 }

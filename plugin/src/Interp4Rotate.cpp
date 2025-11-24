@@ -53,7 +53,7 @@ bool Interp4Rotate::ExecCmd(AbstractScene &rScn,
 
     if (wObMob == nullptr)
     {
-        std::cerr << "Nie mogę znaleźć obiektu: " << this->objectName.c_str() << std::endl;
+        std::cerr << "Error: Object not found: " << this->objectName.c_str() << "\n";
         return false;
     }
 
@@ -74,11 +74,9 @@ bool Interp4Rotate::ExecCmd(AbstractScene &rScn,
             {
                 ComInterface interface(rComChann);
 
-                // send to server
-
                 if (!interface.UpdateObj(wObMob->GetName(), wObMob->GetPositoin_m(), Vector3D(wObMob->GetAng_Roll_deg(), wObMob->GetAng_Pitch_deg(), wObMob->GetAng_Yaw_deg())))
                 {
-                    std::cerr << "Failed to update object: " << wObMob->GetName() << std::endl;
+                    std::cerr << "Error: Failed to update object: " << wObMob->GetName() << "\n";
                     wObMob->UnLockAccess();
 
                     return false;
@@ -105,11 +103,9 @@ bool Interp4Rotate::ExecCmd(AbstractScene &rScn,
             {
                 ComInterface interface(rComChann);
 
-                // send to server
-
                 if (!interface.UpdateObj(wObMob->GetName(), wObMob->GetPositoin_m(), Vector3D(wObMob->GetAng_Roll_deg(), wObMob->GetAng_Pitch_deg(), wObMob->GetAng_Yaw_deg())))
                 {
-                    std::cerr << "Failed to update object: " << wObMob->GetName() << std::endl;
+                    std::cerr << "Error: Failed to update object: " << wObMob->GetName() << "\n";
                     wObMob->UnLockAccess();
 
                     return false;
@@ -141,7 +137,7 @@ bool Interp4Rotate::ExecCmd(AbstractScene &rScn,
 
                 if (!interface.UpdateObj(wObMob->GetName(), wObMob->GetPositoin_m(), Vector3D(wObMob->GetAng_Roll_deg(), wObMob->GetAng_Pitch_deg(), wObMob->GetAng_Yaw_deg())))
                 {
-                    std::cerr << "Failed to update object: " << wObMob->GetName() << std::endl;
+                    std::cerr << "Error: Failed to update object: " << wObMob->GetName() << "\n";
                     wObMob->UnLockAccess();
 
                     return false;
@@ -164,22 +160,22 @@ bool Interp4Rotate::ReadParams(std::istream &Strm_CmdsList)
 {
     if (!(Strm_CmdsList >> objectName))
     {
-        std::cerr << "Interp4Rotate: Error when loading objectName" << std::endl;
+        std::cerr << "Interp4Rotate: Error when loading objectName\n";
         return false;
     }
     if (!(Strm_CmdsList >> axisName))
     {
-        std::cerr << "Interp4Rotate: Error when loading axis name" << std::endl;
+        std::cerr << "Interp4Rotate: Error when loading axis name\n";
         return false;
     }
     if (!(Strm_CmdsList >> angularSpeed))
     {
-        std::cerr << "Interp4Rotate: Error when loading angularSpeed" << std::endl;
+        std::cerr << "Interp4Rotate: Error when loading angularSpeed\n";
         return false;
     }
     if (!(Strm_CmdsList >> angle))
     {
-        std::cerr << "Interp4Rotate: Error when loading angle" << std::endl;
+        std::cerr << "Interp4Rotate: Error when loading angle\n";
         return false;
     }
     return true;
@@ -190,7 +186,7 @@ bool Interp4Rotate::ReadParams(std::istream &Strm_CmdsList)
  */
 void Interp4Rotate::PrintSyntax() const
 {
-    cout << "Rotate " << "object_name" << " Axis" << " Angular_speed[degrees/s]" << " Rotation_angle[degrees]" << endl;
+    cout << "Rotate " << "object_name" << " Axis" << " Angular_speed[degrees/s]" << " Rotation_angle[degrees]\n";
 }
 
 /*!
@@ -198,5 +194,5 @@ void Interp4Rotate::PrintSyntax() const
  */
 void Interp4Rotate::PrintCmd() const
 {
-    cout << GetCmdName() << " " << objectName << " " << axisName << " " << angularSpeed << " " << angle << endl;
+    cout << GetCmdName() << " " << objectName << " " << axisName << " " << angularSpeed << " " << angle << "\n";
 }

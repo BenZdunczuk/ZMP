@@ -2,32 +2,28 @@
 #include <xercesc/sax2/XMLReaderFactory.hpp>
 #include <xercesc/sax2/DefaultHandler.hpp>
 #include <xercesc/util/XMLString.hpp>
-#include "xmlinterp.hh"
-#include <iostream>
-#include <list>
 
+#include "xmlinterp.hh"
 #include "parser.hh"
-#include "pluginManager.hh"
 #include "libInterface.hh"
 
 using namespace std;
 using namespace xercesc;
 
-#define LINE_SIZE 255
-
-bool Parser::ReadCmd(std::istream &IStrm)
+bool Parser::ReadCmd(std::istream &IStrm ,pluginManager manager,Scene &scene, ComChannel &channel)
 {
     std::string Keyword;
     while (IStrm >> Keyword)
     {
         std::shared_ptr<LibInterface> libHandler = manager.findPlugin(Keyword);
         if (libHandler != nullptr)
-        {   
-            manager.activePlugin = libHandler->getCMD();
-            if (manager.activePlugin->ReadParams(IStrm))
+        {
+            manager.setActivePlugin(libHandler->getCMD());
+            if (manager.getActivePlugin()->ReadParams(IStrm))
             {
-                manager.activePlugin->PrintSyntax();
-                manager.activePlugin->PrintCmd();
+                manager.getActivePlugin()->PrintSyntax();
+                manager.getActivePlugin()->PrintCmd();
+                manager.getActivePlugin()->ExecCmd(scene,NULL,channel);
             }
         }
         else
@@ -36,26 +32,18 @@ bool Parser::ReadCmd(std::istream &IStrm)
     return true;
 }
 
-std::string Parser::preprocessFile(const std::string &filename)
+std::string Parser::preprocessFile(const std::string &cmdsFileName)
 {
-    std::string output_file = filename + ".tmp";
-
-    std::string cmd = "cpp -P " + filename + " -o " + output_file;
+    std::string outputFile = cmdsFileName + ".tmp";
+    std::string cmd = "cpp -P " + cmdsFileName + " -o " + outputFile;
     system(cmd.c_str());
-
-    return output_file;
+    
+    return outputFile;
 }
 
-/*!
- * Czyta z pliku xml opis poleceń i dodaje je do listy komend,
- * które robot musi wykonać.
- * \param sFileName - (\b we.) nazwa pliku z opisem poleceń.
- * \param Configb we.) zarządca listy poleceń dla robota.
- * \retval true - jeśli wczytanie zostało zrealizowane poprawnie,
- * \retval false - w przeciwnym przypadku.
- */
-bool Parser::ReadXMLFile(const char *sFileName, Configuration &rConfig)
+bool Parser::ReadXMLFile(const std::string xmlFileName, Configuration &Config)
 {
+    const char *fileName = xmlFileName.c_str();
     try
     {
         XMLPlatformUtils::Initialize();
@@ -80,7 +68,7 @@ bool Parser::ReadXMLFile(const char *sFileName, Configuration &rConfig)
 
     pParser->setFeature(XMLUni::fgXercesValidationErrorAsFatal, true);
 
-    DefaultHandler *pHandler = new XMLInterp4Config(rConfig);
+    DefaultHandler *pHandler = new XMLInterp4Config(Config);
     pParser->setContentHandler(pHandler);
     pParser->setErrorHandler(pHandler);
 
@@ -96,7 +84,7 @@ bool Parser::ReadXMLFile(const char *sFileName, Configuration &rConfig)
             return false;
         }
         pParser->setFeature(XMLUni::fgXercesUseCachedGrammarInParse, true);
-        pParser->parse(sFileName);
+        pParser->parse(fileName);
     }
     catch (const XMLException &Exception)
     {

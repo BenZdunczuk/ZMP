@@ -12,14 +12,12 @@ class Vector3D : public geom::Vector<double, 3>
 {
 public:
     /*!
-     * \brief Standardowy konstruktor.
-     * Standardowy konstruktor.
+     * \brief Kkonstruktor bezparametryczny.
      */
     Vector3D();
 
     /*!
-     * \brief Standardowy konstruktor.
-     * Standardowy konstruktor.
+     * \brief Konstruktor parametryczny.
      *
      * \param x - parametr x wektora
      * \param y - parametr y wektora
@@ -29,8 +27,7 @@ public:
 };
 
 /*!
- * \brief Funkcja czytająca wektor z standardowego strumienia wejściowego.
- * Funkcja czytająca wektor z standardowego strumienia wejściowego.
+ * \brief Funkcja czytająca wektor ze strumienia wejściowego.
  *
  * \param in - referencja na strumieni wejściowy
  * \param vec - referencja na wektor 3D
@@ -38,9 +35,7 @@ public:
 std::istream &operator>>(std::istream &in, Vector3D &vec);
 
 /*!
- * \brief Funkcja drukująca wektor na standardowy strumieni wyjściowy.
- * Funkcja drukująca wektor na standardowy strumieni wyjściowy.
- * W formie (x,y,z).
+ * \brief Funkcja wyświetlająca wektor na strumien wyjściowy.
  *
  * \param out - referencja na strumieni wyjściowy
  * \param vec - stała referencja na wektor 3D

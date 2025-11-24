@@ -59,7 +59,7 @@ public:
      *
      * \param filename - ścieżka do pliku z biblioteką dynamiczną.
      */
-    bool init(const std::string &filename);
+    bool loadPlugin(const std::string &filename);
 
     /*!
      * \brief Standardowy destruktor klasy.

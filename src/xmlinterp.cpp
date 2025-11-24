@@ -6,7 +6,7 @@
 #include <iostream>
 #include <cstring>
 
-#include "ConfigurationCuboid.hh"
+#include "mobileObjConf.hh"
 
 using namespace std;
 
@@ -61,8 +61,6 @@ void XMLInterp4Config::ProcessLibAttrs(const xercesc::Attributes &rAttrs)
     char *sLibName = xercesc::XMLString::transcode(rAttrs.getValue(Size));
 
     cout << "  Nazwa biblioteki: " << sLibName << endl;
-
-    // Tu trzeba wpisać własny kod ...
 
     this->config.addPluginPath(sLibName);
 
@@ -123,7 +121,7 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes &rAttrs)
     // IStrm >> Scale;
     //
 
-    ConfigurationCuboid object;
+    mobileObjConf object;
 
     if (strcmp(sName_Name, "Name") == 0)
     {

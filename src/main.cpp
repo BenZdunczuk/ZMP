@@ -1,12 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include <dlfcn.h>
 #include <cassert>
-
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+#include <filesystem>
 
 #include "AbstractInterp4Command.hh"
 #include "parser.hh"
@@ -14,68 +9,38 @@
 #include "Configuration.hh"
 #include "Port.hh"
 #include "ComChannel.hh"
+#include "interpreter.hh"
 
-#define PLUGIN_NAME__move "./plugin/libInterp4Move.so"
-#define PLUGIN_NAME__rotate "./plugin/libInterp4Rotate.so"
-#define PLUGIN_NAME__set "./plugin/libInterp4Set.so"
-#define PLUGIN_NAME__pause "./plugin/libInterp4Pause.so"
+// #define PLUGIN_NAME__move "./plugin/libInterp4Move.so"
+// #define PLUGIN_NAME__rotate "./plugin/libInterp4Rotate.so"
+// #define PLUGIN_NAME__set "./plugin/libInterp4Set.so"
+// #define PLUGIN_NAME__pause "./plugin/libInterp4Pause.so"
 
 using namespace std;
 
 int main(int argc, char **argv)
 {
-
-    list<string> pluginNameList = {
-        PLUGIN_NAME__move,
-        PLUGIN_NAME__rotate,
-        PLUGIN_NAME__pause,
-        PLUGIN_NAME__set};
-
-    pluginManager manager;
-    manager.init(pluginNameList);
-
-    Parser p(manager);
-    Configuration config;
-
+    interpreter Intpr;
     if (argc < 3)
     {
-        cout << "Missing input file/files!" << endl;
-        cout << "Usage: ./cmds_intepreter [config_file_path] [commands_file_path]" << endl;
+        cout << "Error: Missing input file/files!\n";
+        cout << "Usage: ./cmds_intepreter [config_file_path] [commands_file_path]\n";
         return 1;
     }
 
-    if (p.ReadXMLFile(argv[1], config))
+    for (int i = 1; i <= 2; i++)
     {
-        cout << "read xml config file successful" << endl;
+        if (!std::filesystem::exists(argv[i]))
+        {
+            cout << "Error: File " << argv[i] << " not found!\n";
+            return 1;
+        }
     }
 
-    string preprocessedFileName = p.preprocessFile(argv[2]);
-    ifstream inputFileStrm(preprocessedFileName);
-    if (p.ReadCmd(inputFileStrm))
+    if (Intpr.init(argv[1], argv[2]))
     {
-        cout << "read commands file successful" << endl;
+        return 1;
     }
-
-    struct sockaddr_in Server = {0};
-    ComChannel channel;
-
-    Server.sin_family = AF_INET;
-    Server.sin_addr.s_addr = inet_addr("127.0.0.1");
-    Server.sin_port = htons(PORT);
-
-    int Socket = socket(AF_INET, SOCK_STREAM, 0);
-
-    if (Socket < 0)
-    {
-        throw std::runtime_error("Nie mogę otworzyć gniazda sieciowego!");
-    }
-
-    if (connect(Socket, (struct sockaddr *)&Server, sizeof(Server)) < 0)
-    {
-        throw std::runtime_error("Nie mogę połączyć się z serwerem!");
-    }
-
-    channel.Init(Socket);
 
     return 0;
 }

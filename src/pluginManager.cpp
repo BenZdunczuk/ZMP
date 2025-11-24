@@ -6,20 +6,23 @@ void pluginManager::init(std::list<std::string> lib_paths)
     {
         std::shared_ptr<LibInterface> lib = std::make_shared<LibInterface>();
 
-        std::cout << "Loading library " << path << std::endl;
+        std::cout << "Loading library " << path << "\n";
 
-        if (lib->init(path))
+        if (lib->loadPlugin(path))
         {
             plugins[lib->getCMDName()] = lib;
         }
         else
         {
-            std::cerr << "Error: Cannot load lib: " << path << std::endl;
+            std::cerr << "Error: Cannot load lib: " << path << "\n";
         }
     }
 }
 
 std::shared_ptr<LibInterface> pluginManager::findPlugin(std::string cmdName)
 {
-    return plugins.find(cmdName)->second;
+    if(plugins.count(cmdName)){
+        return plugins.at(cmdName);
+    }
+    return nullptr;
 }

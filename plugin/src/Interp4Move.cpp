@@ -57,7 +57,7 @@ bool Interp4Move::ExecCmd(AbstractScene &rScn,
 
     if (wObMob == nullptr)
     {
-        std::cerr << "Nie mogę znaleźć obiektu: " << this->objectName.c_str() << std::endl;
+        std::cerr << "Error: Object not found: " << this->objectName.c_str() << "\n";
         return false;
     }
 
@@ -82,11 +82,9 @@ bool Interp4Move::ExecCmd(AbstractScene &rScn,
         {
             ComInterface interface(rComChann);
 
-            // send to server
-
             if (!interface.UpdateObj(wObMob->GetName(), wObMob->GetPositoin_m(), Vector3D(wObMob->GetAng_Roll_deg(), wObMob->GetAng_Pitch_deg(), wObMob->GetAng_Yaw_deg())))
             {
-                std::cerr << "Failed to update object: " << wObMob->GetName() << std::endl;
+                std::cerr << "Error: Failed to update object: " << wObMob->GetName() << "\n";
                 wObMob->UnLockAccess();
 
                 return false;
@@ -108,19 +106,19 @@ bool Interp4Move::ReadParams(std::istream &Strm_CmdsList)
 {
     if (!(Strm_CmdsList >> objectName))
     {
-        std::cout << "Interp4Move: Error when loading objectName" << std::endl;
+        std::cout << "Interp4Move: Error when loading objectName" << "\n";
         return false;
     }
 
     if (!(Strm_CmdsList >> verticalSpeed))
     {
-        std::cout << "Interp4Move: Error when loading verticalSpeed" << std::endl;
+        std::cout << "Interp4Move: Error when loading verticalSpeed" << "\n";
         return false;
     }
 
     if (!(Strm_CmdsList >> distance))
     {
-        std::cout << "Interp4Move: Error when loading distance" << std::endl;
+        std::cout << "Interp4Move: Error when loading distance" << "\n";
         return false;
     }
 
@@ -132,7 +130,7 @@ bool Interp4Move::ReadParams(std::istream &Strm_CmdsList)
  */
 void Interp4Move::PrintSyntax() const
 {
-    cout << "Move" << " Object_name" << " Speed[m/s]" << " Distance[m]" << endl;
+    cout << "Move" << " Object_name" << " Speed[m/s]" << " Distance[m]\n";
 }
 
 /*!
@@ -140,5 +138,5 @@ void Interp4Move::PrintSyntax() const
  */
 void Interp4Move::PrintCmd() const
 {
-    cout << GetCmdName() << " " << objectName << "  " << verticalSpeed << " " << distance << endl;
+    cout << GetCmdName() << " " << objectName << "  " << verticalSpeed << " " << distance << "\n";
 }

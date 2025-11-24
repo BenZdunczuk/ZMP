@@ -32,7 +32,6 @@ Interp4Pause::Interp4Pause() : pauseTime(0)
 
 const char *Interp4Pause::GetCmdName() const
 {
-    /*Wyswietla nazwe polecenia*/
     return "Pause";
 }
 
@@ -55,7 +54,7 @@ bool Interp4Pause::ReadParams(std::istream &Strm_CmdsList)
     // }
     if (!(Strm_CmdsList >> pauseTime))
     {
-        std::cerr << "Interp4Pause: Error when loading pauseTime" << std::endl;
+        std::cerr << "Interp4Pause: Error when loading pauseTime\n";
         return false;
     }
 
@@ -65,10 +64,10 @@ bool Interp4Pause::ReadParams(std::istream &Strm_CmdsList)
 void Interp4Pause::PrintSyntax() const
 {
     // std::cout << "Object name: " << objectName << " Stop time[s]: " << pauseTime << std::endl;
-    std::cout << "Pause" << " Stop_time[s]" << std::endl;
+    std::cout << "Pause" << " Stop_time[s]\n";
 }
 
 void Interp4Pause::PrintCmd() const
 {
-    std::cout << GetCmdName() << " " << objectName << " " << pauseTime << std::endl;
+    std::cout << GetCmdName() << " " << objectName << " " << pauseTime << "\n";
 }

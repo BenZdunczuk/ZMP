@@ -2,34 +2,30 @@
 #define CONFIGURATION_HH
 
 #include <list>
+
 #include "AbstractMobileObj.hh"
 #include "Vector3D.hh"
-
-#include "ConfigurationCuboid.hh"
+#include "mobileObjConf.hh"
 
 /*!
  * \brief Klasa przechowująca konfigurację załadowaną z pliku XML.
- * Klasa przechowująca konfigurację załadowaną z pliku XML.
  */
 class Configuration
 {
 
     /*!
      * \brief Lista z załadowanymi ścieżkami do pluginów.
-     * Lista z załadowanymi ścieżkami do pluginów.
      */
     std::list<std::string> pluginPaths;
 
     /*!
-     * \brief Lista z załadowanymi parametrami obiektów sceny Cuboid.
-     * Lista z załadowanymi parametrami obiektów sceny Cuboid.
+     * \brief Lista z załadowanymi parametrami obiektów sceny mobileObj.
      */
-    std::list<ConfigurationCuboid> objects;
+    std::list<mobileObjConf> objects;
 
 public:
     /*!
      * \brief Funkcja dodająca ścieżkę do pluginu.
-     * Funkcja dodająca ścieżkę do pluginu.
      */
     void addPluginPath(const std::string &path)
     {
@@ -38,7 +34,6 @@ public:
 
     /*!
      * \brief Funkcja zwracająca referencję na listę z ścieżkami do pluginu.
-     * Funkcja zwracająca referencję na listę z ścieżkami do pluginu.
      *
      * \return stała referencja na listę ścieżek z pluginami.
      */
@@ -48,21 +43,19 @@ public:
     }
 
     /*!
-     * \brief Funkcja dodająca konfigurację obiektu Cuboid.
-     * Funkcja dodająca konfigurację obiektu Cuboid.
+     * \brief Funkcja dodająca konfigurację obiektu mobileObj.
      */
-    void addObject(const ConfigurationCuboid &obj)
+    void addObject(const mobileObjConf &obj)
     {
         this->objects.push_back(obj);
     }
 
     /*!
-     * \brief Funkcja zwracająca referencję na listę z konfiguracją obiektów Cuboid.
-     * Funkcja zwracająca referencję na listę z konfiguracją obiektów Cuboid.
+     * \brief Funkcja zwracająca referencję na listę z konfiguracją obiektów mobileObj.
      *
-     * \return stała referencja na listę z konfiguracją obiektów Cuboid.
+     * \return stała referencja na listę z konfiguracją obiektów mobileObj.
      */
-    const std::list<ConfigurationCuboid> &getObjects() const
+    const std::list<mobileObjConf> &getObjects() const
     {
         return this->objects;
     }

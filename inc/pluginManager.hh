@@ -16,17 +16,41 @@
 class pluginManager
 {
     private:
-    
+    /*!
+     * \brief Aktualnie wykorzystywany (wczytywany/używany) plugin
+     */
+    AbstractInterp4Command *activePlugin;
 
     public:
+    /*!
+     * \brief Metoda zwracająca aktualny plugin
+     *
+     * \return wskażnik na plugin
+     */
+    AbstractInterp4Command *getActivePlugin(){
+        return activePlugin;
+    }
+
+    /*!
+     * \brief Metoda aktualizująca aktualny plugin
+     *
+     * \param[in] plugin - wskażnik na nowy aktywny plugin
+     */
+    void setActivePlugin(AbstractInterp4Command *plugin){
+        activePlugin = plugin;
+    }
+
     /*!
      * \brief Kolekcja bibliotek dynamicznych z poleceniami w parach nazwa polecenia - wskaźnik na interfejs biblioteki.
      */
     std::map<std::string, std::shared_ptr<LibInterface>> plugins;
 
+    /*!
+     * \brief Metoda szukająca pluginu po nazwie
+     *
+     * \return wskażnik na plugin w przypadku znalezienia lub nullptr w przypadku braku dopasowania
+     */
     std::shared_ptr<LibInterface> findPlugin(std::string cmdName);
-
-    AbstractInterp4Command *activePlugin;
 
     /*!
      * \brief Funkcja inicjalizująca zestaw bibliotek.
