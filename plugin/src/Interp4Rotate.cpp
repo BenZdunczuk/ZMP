@@ -11,37 +11,27 @@ extern "C"
     const char *GetCmdName() { return "Rotate"; }
 }
 
-/*!
- * \brief
- *
- *
- */
 AbstractInterp4Command *CreateCmd(void)
 {
     return Interp4Rotate::CreateCmd();
 }
 
-/*!
- *
- */
 AbstractInterp4Command *Interp4Rotate::CreateCmd()
 {
     return new Interp4Rotate();
 }
 
-/*!
- *
- */
 Interp4Rotate::Interp4Rotate() : objectName(" "), angularSpeed(0), axisName(" ")
 {
 }
 
-/*!
- *
- */
 const char *Interp4Rotate::GetCmdName() const
 {
     return ::GetCmdName();
+}
+
+const char *Interp4Rotate::GetObjName() const{
+    return this->objectName.c_str();
 }
 
 bool Interp4Rotate::ExecCmd(AbstractScene &rScn,

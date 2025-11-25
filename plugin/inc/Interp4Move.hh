@@ -58,6 +58,11 @@ public:
     virtual void PrintParams() const override {}
 
     /*!
+     * \brief Udostępnia nazwę ostatniego obiektu wczytanego
+     */
+    virtual const char *GetObjName() const override;
+
+    /*!
      * \brief Wyświetla nazwę polecenia
      */
     virtual const char *GetCmdName() const override;

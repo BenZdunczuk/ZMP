@@ -37,6 +37,11 @@ public:
     virtual void PrintParams() const = 0;
 
     /*!
+     * \brief Udostępnia nazwę ostatniego obiektu wczytanego
+     */
+    virtual const char *GetObjName() const = 0;
+
+    /*!
      * \brief Udostępnia nazwę polecenia
      */
     virtual const char *GetCmdName() const = 0;

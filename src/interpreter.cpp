@@ -38,13 +38,13 @@ bool interpreter::openConnection()
 bool interpreter::init(const std::string xmlFileName, const std::string cmdsFileName)
 {
     if(!openConnection()){
-        std::cout << "Connection failure\n";
+        std::cout << "Interpreter: Connection failure\n";
         return false;
     }
 
     if (!parser.ReadXMLFile(xmlFileName, config))
     {
-        std::cout << "Read commands file failure\n";
+        std::cout << "Interpreter: Read commands file failure\n";
         return false;
     }
 
@@ -67,11 +67,11 @@ bool interpreter::init(const std::string xmlFileName, const std::string cmdsFile
         if (interface.AddObj(obj.name, obj.shift, obj.scale, obj.trans, obj.rotation, obj.color))
         {
             this->scene.AddMobileObj(object);
-            std::cout << "Succesfully added object: " << obj.name << "\n";
+            std::cout << "Interpreter: Succesfully added object: " << obj.name << "\n";
         }
         else
         {
-            std::cerr << "Failed to add object: " << obj.name << "\n";
+            std::cerr << "Interpreter: Failed to add object: " << obj.name << "\n";
         }
     }
 
@@ -80,7 +80,7 @@ bool interpreter::init(const std::string xmlFileName, const std::string cmdsFile
 
     if (!parser.ReadCmd(inputFileStrm, manager,scene,channel))
     {
-        std::cout << "Read commands file failure\n";
+        std::cout << "Interpreter: Read commands file failure\n";
         return false;
     }
 
@@ -90,4 +90,10 @@ bool interpreter::init(const std::string xmlFileName, const std::string cmdsFile
 bool interpreter::exec()
 {
     return false;
+}
+
+interpreter::~interpreter(){
+    ComInterface interface(this->channel);
+    interface.Close();
+    close(this->channel.GetSocket());
 }

@@ -35,6 +35,10 @@ const char *Interp4Pause::GetCmdName() const
     return "Pause";
 }
 
+const char *Interp4Pause::GetObjName() const{
+    return this->objectName.c_str();
+}
+
 bool Interp4Pause::ExecCmd(AbstractScene &rScn,
                            const char *sMobObjName,
                            AbstractComChannel &rComChann)

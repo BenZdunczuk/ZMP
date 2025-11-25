@@ -37,9 +37,10 @@ const char *Interp4Set::GetCmdName() const
     return ::GetCmdName();
 }
 
-/*!
- *
- */
+const char *Interp4Set::GetObjName() const{
+    return this->objectName.c_str();
+}
+
 bool Interp4Set::ExecCmd(AbstractScene &rScn,
                          const char *sMobObjName,
                          AbstractComChannel &rComChann)
@@ -61,8 +62,7 @@ bool Interp4Set::ExecCmd(AbstractScene &rScn,
 
     ComInterface interface(rComChann);
 
-    // send to server
-
+    std::cout << "123\n";
     if (!interface.UpdateObj(wObMob->GetName(), wObMob->GetPositoin_m(), Vector3D(wObMob->GetAng_Roll_deg(), wObMob->GetAng_Pitch_deg(), wObMob->GetAng_Yaw_deg())))
     {
         std::cerr << "Error: Failed to update object: " << wObMob->GetName() << "\n";

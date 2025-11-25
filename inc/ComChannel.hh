@@ -8,6 +8,10 @@
  */
 
 #include <mutex>
+#include <iostream>
+#include <ostream>
+#include <iomanip>
+#include <unistd.h>
 
 #include "AbstractComChannel.hh"
 
@@ -65,4 +69,26 @@ public:
     {
         return this->_lock;
     }
+
+    bool Send(const std::string &msg) {
+        LockAccess();
+        ssize_t toSend = msg.size();
+        const char *data = msg.c_str();
+
+        while (toSend > 0) {
+            ssize_t sent = write(_socket, data, toSend);
+            if (sent < 0) {
+                std::cout << "[ComChannel] Błąd wysyłania danych przez socket.\n";
+                UnlockAccess();
+                return false;
+            }
+            toSend -= sent;
+            data += sent;
+        }
+
+        UnlockAccess();
+        return true;
+
+    }
+
 };

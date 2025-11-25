@@ -23,7 +23,7 @@ bool Parser::ReadCmd(std::istream &IStrm ,pluginManager manager,Scene &scene, Co
             {
                 manager.getActivePlugin()->PrintSyntax();
                 manager.getActivePlugin()->PrintCmd();
-                manager.getActivePlugin()->ExecCmd(scene,NULL,channel);
+                manager.getActivePlugin()->ExecCmd(scene,manager.getActivePlugin()->GetObjName(),channel);
             }
         }
         else

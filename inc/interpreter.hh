@@ -19,7 +19,7 @@ private:
 
 public:
     interpreter() {}
-    ~interpreter() {}
+    ~interpreter();
 
     bool openConnection();
     bool init(const std::string xmlFileName, const std::string cmdsFileName);

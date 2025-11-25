@@ -3,7 +3,7 @@
 ComInterface::ComInterface(AbstractComChannel &_channel)
     : channel(_channel)
 {
-    this->channel.LockAccess();
+    // this->channel.LockAccess();
 }
 
 bool ComInterface::AddObj(const std::string &name, const Vector3D &shift, const Vector3D &scale, const Vector3D &trans, const Vector3D &rotXYZ, const Vector3D &RGB)
@@ -12,7 +12,7 @@ bool ComInterface::AddObj(const std::string &name, const Vector3D &shift, const 
 
     std::ostringstream strWe;
 
-    strWe << "AddObj Name=" << name << " Shift=" << shift << " Scale=" << scale << " Trans_m=" << trans << " RGB=" << RGB << " RotXYZ_deg=" << rotXYZ;
+    strWe <<"AddObj Name="<<name<<" RGB="<<RGB<<" Scale="<<scale<<" Shift="<<shift<<" RotXYZ_deg="<<rotXYZ<<" Trans_m="<<trans<<"\n";
 
     msg = strWe.str();
 
@@ -22,6 +22,7 @@ bool ComInterface::AddObj(const std::string &name, const Vector3D &shift, const 
 
     if (write(socket, msg.c_str(), msg.length()) != msg.length())
     {
+        std::cout << "Error: Adding Object failure! \n";
         return false;
     }
 
@@ -34,8 +35,8 @@ bool ComInterface::UpdateObj(const std::string &name, const Vector3D &trans, con
 
     std::ostringstream strWe;
 
-    strWe << "UpdateObj Name=" << name << " Trans_m=" << trans << " RotXYZ_deg=" << rotXYZ << "\n";
-
+    strWe <<"UpdateObj Name="<<name<<" Trans_m="<<trans<<" RotXYZ_deg="<<rotXYZ<<"\n";
+    
     msg = strWe.str();
 
     std::cout << "Sending: " << msg << "\n";
@@ -44,6 +45,7 @@ bool ComInterface::UpdateObj(const std::string &name, const Vector3D &trans, con
 
     if (write(socket, msg.c_str(), msg.length()) != msg.length())
     {
+        std::cout << "Error: Updating Object failure! \n";
         return false;
     }
 
