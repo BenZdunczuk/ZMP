@@ -1,7 +1,13 @@
 #pragma once
 
-#include <dlfcn.h>
+/*!
+ * \file
+ * \brief Zawiera definicję klasy LinInterface
+ *
+ *  Klasa reprezentująca interfejs biblioteki dynamicznej.
+ */
 
+#include <dlfcn.h>
 #include <map>
 #include <string>
 
@@ -62,7 +68,7 @@ public:
     bool loadPlugin(const std::string &filename);
 
     /*!
-     * \brief Standardowy destruktor klasy.
+     * \brief Destruktor klasy.
      */
     ~LibInterface()
     {

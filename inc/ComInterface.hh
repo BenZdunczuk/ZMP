@@ -1,5 +1,12 @@
 #pragma once
 
+/*!
+ * \file
+ * \brief Zawiera definicję klasy ComInterface
+ *
+ *  Klasa zapewniająca podstawowe polecenia dla serwera graficznego.
+ */
+
 #include <string>
 #include <sstream>
 #include <cstring>
@@ -11,7 +18,7 @@
 #include "Vector3D.hh"
 
 /*!
- * \brief Klasa zapewniająca podstawowe polecenie dla serwera graficznego.
+ * \brief Klasa zapewniająca podstawowe polecenia dla serwera graficznego.
  */
 class ComInterface
 {
@@ -80,6 +87,6 @@ public:
      */
     ~ComInterface()
     {
-        this->channel.UnlockAccess();
+        // this->channel.UnlockAccess();
     }
 };

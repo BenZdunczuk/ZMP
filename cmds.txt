@@ -1,0 +1,15 @@
+#define ROTATE_SPEED     30
+/*
+ *  Przykladowy zestaw polecen
+ */
+  Move Head 1 2
+  Begin_Parallel_Actions
+  Rotate Head.Ear1 OZ ROTATE_SPEED 90
+  Rotate Head.Ear2 OZ ROTATE_SPEED 90
+  End_Parallel_Actions
+  Pause  1000                  /* Zawieszenie na 1 sek. */
+  Begin_Parallel_Actions
+  Rotate Head.Ear1 OZ ROTATE_SPEED -90
+  Rotate Head.Ear2 OZ ROTATE_SPEED -90
+  End_Parallel_Actions
+                                 /* przesuniecie po luku                  */

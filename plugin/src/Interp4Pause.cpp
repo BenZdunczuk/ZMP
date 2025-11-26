@@ -39,9 +39,7 @@ const char *Interp4Pause::GetObjName() const{
     return this->objectName.c_str();
 }
 
-bool Interp4Pause::ExecCmd(AbstractScene &rScn,
-                           const char *sMobObjName,
-                           AbstractComChannel &rComChann)
+bool Interp4Pause::ExecCmd(AbstractScene &rScn,AbstractComChannel &rComChann)
 {
 
     usleep(pauseTime * 1000);

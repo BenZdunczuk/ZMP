@@ -3,6 +3,8 @@
 #include <xercesc/sax2/DefaultHandler.hpp>
 #include <xercesc/util/XMLString.hpp>
 
+#include <thread>
+
 #include "xmlinterp.hh"
 #include "parser.hh"
 #include "libInterface.hh"
@@ -10,11 +12,60 @@
 using namespace std;
 using namespace xercesc;
 
-bool Parser::ReadCmd(std::istream &IStrm ,pluginManager manager,Scene &scene, ComChannel &channel)
+void paralellCommand(AbstractInterp4Command *cmd, AbstractScene &scene, ComChannel &channel)
 {
+    cmd->ExecCmd(scene,channel);
+    // std::cout << "tred\n";
+}
+
+bool Parser::ReadAndExecCmd(std::istream &IStrm, pluginManager manager, Scene &scene, ComChannel &channel)
+{
+    // bool parallel = false;
+    std::list<std::thread> threadList;
     std::string Keyword;
+
     while (IStrm >> Keyword)
     {
+        if (Keyword == "Begin_Parallel_Actions")
+        {
+            // cout << "begin_parallel\n";
+            while (Keyword != "End_Parallel_Actions")
+            {
+
+                IStrm >> Keyword;
+                // cout << Keyword << "\n";
+                std::shared_ptr<LibInterface> libHandler = manager.findPlugin(Keyword);
+                if (libHandler != nullptr)
+                {
+                    manager.setActivePlugin(libHandler->getCMD());
+                    if (manager.getActivePlugin()->ReadParams(IStrm))
+                    {
+                        manager.getActivePlugin()->PrintSyntax();
+                        manager.getActivePlugin()->PrintCmd();
+                        std::thread task(paralellCommand, manager.getActivePlugin(), std::ref(scene), std::ref(channel));
+                        threadList.push_back(std::move(task));
+                    }
+                }else{break;}
+            }
+            if (Keyword == "End_Parallel_Actions")
+            {
+                for (std::thread &thread : threadList)
+                {
+                    thread.join();
+                }
+                // cout << "end\n";
+
+                threadList.clear();
+                // parallel = false;
+                continue;
+                // cout << "++++++++end\n";
+
+            }
+
+            // parallel = true;
+            continue;
+        }
+
         std::shared_ptr<LibInterface> libHandler = manager.findPlugin(Keyword);
         if (libHandler != nullptr)
         {
@@ -23,7 +74,8 @@ bool Parser::ReadCmd(std::istream &IStrm ,pluginManager manager,Scene &scene, Co
             {
                 manager.getActivePlugin()->PrintSyntax();
                 manager.getActivePlugin()->PrintCmd();
-                manager.getActivePlugin()->ExecCmd(scene,manager.getActivePlugin()->GetObjName(),channel);
+                manager.getActivePlugin()->ExecCmd(scene,channel);
+                // std::cout << "singl\n";
             }
         }
         else
@@ -37,7 +89,7 @@ std::string Parser::preprocessFile(const std::string &cmdsFileName)
     std::string outputFile = cmdsFileName + ".tmp";
     std::string cmd = "cpp -P " + cmdsFileName + " -o " + outputFile;
     system(cmd.c_str());
-    
+
     return outputFile;
 }
 

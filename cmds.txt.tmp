@@ -1,0 +1,10 @@
+  Move Head 1 2
+  Begin_Parallel_Actions
+  Rotate Head.Ear1 OZ 30 90
+  Rotate Head.Ear2 OZ 30 90
+  End_Parallel_Actions
+  Pause 1000
+  Begin_Parallel_Actions
+  Rotate Head.Ear1 OZ 30 -90
+  Rotate Head.Ear2 OZ 30 -90
+  End_Parallel_Actions

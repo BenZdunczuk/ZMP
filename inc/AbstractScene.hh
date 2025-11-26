@@ -26,6 +26,7 @@ public:
      * \brief Wyszukuje obiekt o podanej pełnej kwalifikowanej nazwie.
      *
      *  Wyszukuje obiekt o podanej pełnej kwalifikowanej nazwie.
+     * 
      *  \param[in] sName - pełna kwalifikowana nazwa obiektu.
      *  \return Jeśli obiekt zostanie znaleziony, to zwracany jest wskaźnik
      *          na niego. W przypadku przeciwnym zwracany jest wskaźnik \p nullptr.
@@ -36,6 +37,7 @@ public:
      *
      *  Dodaje do sceny nowy obiekt. Obiekt ten musi mieć poprawnie
      *  skonstruowaną pełną kwalifikowaną nazwę.
+     * 
      *  \param[in] pMobObj - wskaźnik na istniejący obiekt.
      */
     virtual void AddMobileObj(AbstractMobileObj *pMobObj) = 0;

@@ -11,6 +11,13 @@
 #include "Scene.hh"
 
 /*!
+ * \file
+ * \brief Zawiera definicję klasy Parser
+ * 
+ *  Klasa wykorzystywana do wczytywania i rozpoznawania komend oraz konfiguracji z plików wejściowych.
+ */
+
+/*!
  * \brief Klasa wykorzystywana do wczytywania i rozpoznawania komend oraz konfiguracji z plików wejściowych.
  */
 class Parser
@@ -24,6 +31,8 @@ public:
     /*!
      * \brief Funkcja do rozwijania makr i usuwania komentarzy z pliku wejściowego.
      *
+     * \param[in] cmdsFileName - ścieżka do pliku wejściowego z komendami
+     *
      * \return Nazwa utworzonego nowego przepreprocessowanego pliku
      */
     std::string preprocessFile(const std::string &cmdsFileName);
@@ -31,12 +40,16 @@ public:
     /*!
      * \brief Funkcja parsująca plik tekstowy z listą komend.
      *
-     * \param[in] Config - obiekt przechowujący konfigurację
-     * \param[in] Config - obiekt przechowujący konfigurację
+     * Funkcja odczytuje oraz wykonuje komendy z przepreprocessowanego pliku wejściowego z komendami.
+     *
+     * \param[in] IStrm - strumień wejściowy - plik z komendami
+     * \param[in] manager - obiekt klasy pluginManager obsługujący pluginy
+     * \param[in] scene - aktualna instancja sceny
+     * \param[in] channel - obiekt połączenia z serwerem
      * 
      * \return Czy operacja się powiodła (tak - true, nie - false).
      */
-    bool ReadCmd(std::istream &IStrm, pluginManager manager,Scene &scene,ComChannel &channel);
+    bool ReadAndExecCmd(std::istream &IStrm, pluginManager manager,Scene &scene,ComChannel &channel);
 
     /*!
      * \brief Funkcja parsująca plik xml z konfiguracją.

@@ -1,6 +1,13 @@
 #ifndef CONFIGURATION_HH
 #define CONFIGURATION_HH
 
+/*!
+ * \file
+ * \brief Zawiera definicję klasy Configuration
+ *
+ *  Klasa przechowująca konfigurację załadowaną z pliku XML.
+ */
+
 #include <list>
 
 #include "AbstractMobileObj.hh"
@@ -12,7 +19,6 @@
  */
 class Configuration
 {
-
     /*!
      * \brief Lista z załadowanymi ścieżkami do pluginów.
      */
@@ -26,6 +32,8 @@ class Configuration
 public:
     /*!
      * \brief Funkcja dodająca ścieżkę do pluginu.
+     *
+     * \param[in] path - ścieżka do pluginu
      */
     void addPluginPath(const std::string &path)
     {
@@ -44,6 +52,8 @@ public:
 
     /*!
      * \brief Funkcja dodająca konfigurację obiektu mobileObj.
+     *
+     * \param[in] obj - wczytana konfiguracja pojedyńczego obiektu
      */
     void addObject(const mobileObjConf &obj)
     {

@@ -2,6 +2,9 @@
 #include "Interp4Rotate.hh"
 #include "ComInterface.hh"
 
+#define N 100       //ile krokow
+#define M 1000000    //czas jednego kroku w us
+
 using std::cout;
 using std::endl;
 
@@ -34,9 +37,7 @@ const char *Interp4Rotate::GetObjName() const{
     return this->objectName.c_str();
 }
 
-bool Interp4Rotate::ExecCmd(AbstractScene &rScn,
-                            const char *sMobObjName,
-                            AbstractComChannel &rComChann)
+bool Interp4Rotate::ExecCmd(AbstractScene &rScn,AbstractComChannel &rComChann)
 {
 
     AbstractMobileObj *wObMob = rScn.FindMobileObj(this->objectName.c_str());
@@ -49,11 +50,41 @@ bool Interp4Rotate::ExecCmd(AbstractScene &rScn,
 
     if (this->axisName == "OX")
     {
+        double start = wObMob->GetAng_Roll_deg();
+        double delta_deg = 0;
+        double dist_step_deg = (double)angle / N;
+        double time_step_us = ((abs((double)this->angle / this->angularSpeed)) * M) / N;
+
+        for (int i = 0; i < N; ++i)
+        {
+            wObMob->LockAccess();
+            delta_deg += dist_step_deg;
+            wObMob->SetAng_Roll_deg(delta_deg + start);
+
+            {
+                ComInterface interface(rComChann);
+
+                if (!interface.UpdateObj(wObMob->GetName(),wObMob->GetPositoin_m(),Vector3D(wObMob->GetAng_Roll_deg(),wObMob->GetAng_Pitch_deg(),wObMob->GetAng_Yaw_deg())))
+                {
+                    std::cerr << "Error: Failed to update object: " << wObMob->GetName() << "\n";
+                    wObMob->UnLockAccess();
+
+                    return false;
+                }
+            }
+
+            wObMob->UnLockAccess();
+
+            usleep(time_step_us);
+        }
+    }
+    else if (this->axisName == "OY")
+    {
 
         double start = wObMob->GetAng_Pitch_deg();
         double delta_deg = 0;
         double dist_step_deg = (double)angle / N;
-        double time_step_us = (abs(((double)this->angle / this->angularSpeed)) * 1000000) / N;
+        double time_step_us = (abs(((double)this->angle / this->angularSpeed)) * M) / N;
 
         for (int i = 0; i < N; ++i)
         {
@@ -77,42 +108,12 @@ bool Interp4Rotate::ExecCmd(AbstractScene &rScn,
             usleep(time_step_us);
         }
     }
-    else if (this->axisName == "OY")
-    {
-        double start = wObMob->GetAng_Roll_deg();
-        double delta_deg = 0;
-        double dist_step_deg = (double)angle / N;
-        double time_step_us = ((abs((double)this->angle / this->angularSpeed)) * 1000000) / N;
-
-        for (int i = 0; i < N; ++i)
-        {
-            wObMob->LockAccess();
-            delta_deg += dist_step_deg;
-            wObMob->SetAng_Roll_deg(delta_deg + start);
-
-            {
-                ComInterface interface(rComChann);
-
-                if (!interface.UpdateObj(wObMob->GetName(), wObMob->GetPositoin_m(), Vector3D(wObMob->GetAng_Roll_deg(), wObMob->GetAng_Pitch_deg(), wObMob->GetAng_Yaw_deg())))
-                {
-                    std::cerr << "Error: Failed to update object: " << wObMob->GetName() << "\n";
-                    wObMob->UnLockAccess();
-
-                    return false;
-                }
-            }
-
-            wObMob->UnLockAccess();
-
-            usleep(time_step_us);
-        }
-    }
     else if (this->axisName == "OZ")
     {
         double start = wObMob->GetAng_Yaw_deg();
         double delta_deg = 0;
         double dist_step_deg = (double)angle / N;
-        double time_step_us = ((abs((double)this->angle / this->angularSpeed) * 1000000)) / N;
+        double time_step_us = ((abs((double)this->angle / this->angularSpeed) * M)) / N;
 
         for (int i = 0; i < N; ++i)
         {
@@ -122,8 +123,6 @@ bool Interp4Rotate::ExecCmd(AbstractScene &rScn,
 
             {
                 ComInterface interface(rComChann);
-
-                // send to server
 
                 if (!interface.UpdateObj(wObMob->GetName(), wObMob->GetPositoin_m(), Vector3D(wObMob->GetAng_Roll_deg(), wObMob->GetAng_Pitch_deg(), wObMob->GetAng_Yaw_deg())))
                 {

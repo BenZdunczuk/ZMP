@@ -1,6 +1,5 @@
 #include "interpreter.hh"
 #include "mobileObj.hh"
-#include "Port.hh"
 
 #include <iostream>
 #include <fstream>
@@ -9,12 +8,15 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#define PORT 6217
+#define address "127.0.0.1"
+
 bool interpreter::openConnection()
 {
     struct sockaddr_in Server = {0};
 
     Server.sin_family = AF_INET;
-    Server.sin_addr.s_addr = inet_addr("127.0.0.1");
+    Server.sin_addr.s_addr = inet_addr(address);
     Server.sin_port = htons(PORT);
 
     int _socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -35,7 +37,7 @@ bool interpreter::openConnection()
     return true;
 }
 
-bool interpreter::init(const std::string xmlFileName, const std::string cmdsFileName)
+bool interpreter::interprete(const std::string xmlFileName, const std::string cmdsFileName)
 {
     if(!openConnection()){
         std::cout << "Interpreter: Connection failure\n";
@@ -78,18 +80,13 @@ bool interpreter::init(const std::string xmlFileName, const std::string cmdsFile
     std::string preprocessedFileName = parser.preprocessFile(cmdsFileName);
     std::ifstream inputFileStrm(preprocessedFileName);
 
-    if (!parser.ReadCmd(inputFileStrm, manager,scene,channel))
+    if (!parser.ReadAndExecCmd(inputFileStrm,manager,scene,channel))
     {
         std::cout << "Interpreter: Read commands file failure\n";
         return false;
     }
 
     return true;
-}
-
-bool interpreter::exec()
-{
-    return false;
 }
 
 interpreter::~interpreter(){

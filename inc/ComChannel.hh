@@ -1,12 +1,5 @@
 #pragma once
 
-/*!
- * \file
- * \brief Zawiera definicję klasy abstrakcyjnej AbstractComChannel
- *
- *  Wyznacza ona niezbędny interfejs klas pochodnych.
- */
-
 #include <mutex>
 #include <iostream>
 #include <ostream>
@@ -14,6 +7,13 @@
 #include <unistd.h>
 
 #include "AbstractComChannel.hh"
+
+/*!
+ * \file
+ * \brief Zawiera definicję klasy abstrakcyjnej AbstractComChannel
+ *
+ *  Wyznacza ona niezbędny interfejs klas pochodnych.
+ */
 
 /*!
  * \brief Definiuje interfejs kanału komunikacyjnego z serwerem graficznym.
@@ -70,25 +70,25 @@ public:
         return this->_lock;
     }
 
-    bool Send(const std::string &msg) {
-        LockAccess();
-        ssize_t toSend = msg.size();
-        const char *data = msg.c_str();
+    // bool Send(const std::string &msg) {
+    //     LockAccess();
+    //     ssize_t toSend = msg.size();
+    //     const char *data = msg.c_str();
 
-        while (toSend > 0) {
-            ssize_t sent = write(_socket, data, toSend);
-            if (sent < 0) {
-                std::cout << "[ComChannel] Błąd wysyłania danych przez socket.\n";
-                UnlockAccess();
-                return false;
-            }
-            toSend -= sent;
-            data += sent;
-        }
+    //     while (toSend > 0) {
+    //         ssize_t sent = write(_socket, data, toSend);
+    //         if (sent < 0) {
+    //             std::cout << "[ComChannel] Błąd wysyłania danych przez socket.\n";
+    //             UnlockAccess();
+    //             return false;
+    //         }
+    //         toSend -= sent;
+    //         data += sent;
+    //     }
 
-        UnlockAccess();
-        return true;
+    //     UnlockAccess();
+    //     return true;
 
-    }
+    // }
 
 };

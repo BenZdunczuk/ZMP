@@ -1,14 +1,16 @@
 Set Podstawa1 0 0 0 0 0 45
 Set Podstawa1.Ramie1 0 0 0 0 0 0
 Set Podstawa1.Ramie1.Ramie2 0 0 0 0 0 0
-Pause 3000
+Pause 2000
 Rotate Podstawa1.Ramie1 OY 5 90
-Pause 3000
+Pause 2000
 Move Podstawa1 1 2
-Pause 3000
+Pause 2000
+Begin_Parallel_Actions
 Rotate Podstawa1.Ramie1 OY 5 45
-Pause 3000
+Pause 2000
 Rotate Podstawa1.Ramie1.Ramie2 OY 36 360
-Pause 3000
+Pause 2000
+End_Parallel_Actions
 Rotate Podstawa1.Ramie1.Ramie2 OX 36 360
-Pause 3000
+Pause 2000

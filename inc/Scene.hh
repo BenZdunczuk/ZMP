@@ -23,27 +23,28 @@ class Scene : public AbstractScene
     /*!
      * \brief Mapa przechowująca obiekty wraz z ich nazwą.
      */
-    std::map<std::string, AbstractMobileObj *> objects;
+    std::map<std::string, AbstractMobileObj*> objects;
 
+    /*!
+     * \brief Muteks zarządzający dostępem do sceny
+     */
     std::mutex lock;
 
 public:
     ~Scene();
 
     /*!
-     * \brief Wyszukuje obiekt o podanej pełnej kwalifikowanej nazwie.
+     * \brief Wyszukuje obiekt o podanej nazwie.
      *
-     *  \param[in] objName - pełna kwalifikowana nazwa obiektu.
-     *  \return Jeśli obiekt zostanie znaleziony, to zwracany jest wskaźnik
-     *          na niego. W przypadku przeciwnym zwracany jest wskaźnik \p nullptr.
+     *  \param[in] objName - nazwa obiektu.
+     * 
+     *  \return Wskaźnik na obiekt w przypadku znalezienia lub \p nullptr.
      */
     AbstractMobileObj *FindMobileObj(const char *objName);
 
     /*!
      * \brief Dodaje do sceny nowy obiekt.
      *
-     *  Nowy obiekt musi mieć poprawnie skonstruowaną pełną nazwę.
-     * 
      *  \param[in] pMobObj - wskaźnik na istniejący obiekt.
      */
     void AddMobileObj(AbstractMobileObj *pMobObj);

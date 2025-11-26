@@ -1,14 +1,5 @@
-#include <iostream>
-#include <fstream>
-#include <cassert>
 #include <filesystem>
 
-#include "AbstractInterp4Command.hh"
-#include "parser.hh"
-#include "pluginManager.hh"
-#include "Configuration.hh"
-#include "Port.hh"
-#include "ComChannel.hh"
 #include "interpreter.hh"
 
 // #define PLUGIN_NAME__move "./plugin/libInterp4Move.so"
@@ -37,7 +28,7 @@ int main(int argc, char **argv)
         }
     }
 
-    if (Intpr.init(argv[1], argv[2]))
+    if (Intpr.interprete(argv[1], argv[2]))
     {
         return 1;
     }

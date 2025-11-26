@@ -55,7 +55,7 @@ public:
      */
     virtual std::mutex &UseGuard() = 0;
 
-    virtual bool Send(const std::string & msg) = 0;
+    // virtual bool Send(const std::string & msg) = 0;
 };
 
 #endif

@@ -5,6 +5,9 @@
 using std::cout;
 using std::endl;
 
+#define N 100       //ile krokow
+#define M 1000000    //czas jednego kroku w us
+
 extern "C"
 {
     AbstractInterp4Command *CreateCmd(void);
@@ -52,9 +55,7 @@ const char *Interp4Move::GetObjName() const{
 /*!
  *
  */
-bool Interp4Move::ExecCmd(AbstractScene &rScn,
-                          const char *sMobObjName,
-                          AbstractComChannel &rComChann)
+bool Interp4Move::ExecCmd(AbstractScene &rScn,AbstractComChannel &rComChann)
 {
 
     AbstractMobileObj *wObMob = rScn.FindMobileObj(this->objectName.c_str());
@@ -72,7 +73,7 @@ bool Interp4Move::ExecCmd(AbstractScene &rScn,
     double delta_x_m, delta_y_m, delta_z_m;
     delta_x_m = delta_y_m = delta_z_m = 0;
     double dist_step_m = (double)distance / N;
-    double time_step_us = (((double)distance / this->verticalSpeed) * 1000000) / N;
+    double time_step_us = (((double)distance / this->verticalSpeed) * M) / N;
 
     for (int i = 0; i < N; ++i)
     {
@@ -101,39 +102,6 @@ bool Interp4Move::ExecCmd(AbstractScene &rScn,
     }
 
     return true;
-//     AbstractMobileObj * pObj = rScn.FindMobileObj(objectName.c_str());
-//   if (!pObj) {
-//         std::cerr << "[Interp4Move] Nie znaleziono obiektu: " << objectName.c_str() << "\n";
-//         return false;
-//     }
-
-//     double speed_m_s = verticalSpeed;
-//     double distance_m = distance;
-//     double yaw_deg = pObj->GetAng_Yaw_deg();
-//     double yaw_rad = yaw_deg * M_PI / 180.0;
-
-//     Vector3D pos = pObj->GetPositoin_m();
-
-//     double total_time_s = distance_m / speed_m_s;
-//     const double step_time_s = 0.05;
-//     int steps = static_cast<int>(total_time_s / step_time_s);
-
-//     double step_dist = speed_m_s * step_time_s;
-
-//     for (int i = 0; i < steps; ++i) {
-//         pos[0] += step_dist * cos(yaw_rad);
-//         pos[1] += step_dist * sin(yaw_rad);
-//         pObj->SetPosition_m(pos);
-
-//         std::ostringstream cmd;
-
-//         rComChann.Send(cmd.str());
-
-//         usleep(static_cast<useconds_t>(step_time_s * 1e6));
-//     }
-
-//     std::cout << "[Interp4Move] Zakończono ruch obiektu " << objectName.c_str() << "\n";
-//     return true;
 }
 
 /*!

@@ -6,12 +6,17 @@
 #include <list>
 
 #include "AbstractInterp4Command.hh"
-
 #include "libInterface.hh"
 
 /*!
+ * \file
+ * \brief Zawiera definicję klasy pluginManager
+ *
+ *  Klasa przechowująca kolekcję bibliotek dynamicznych reprezentujące polecenia wykonywane przez program.
+ */
+
+/*!
  * \brief Klasa przechowująca kolekcję bibliotek dynamicznych reprezentujące polecenia wykonywane przez program.
- * Klasa przechowująca kolekcję bibliotek dynamicznych reprezentujące polecenia wykonywane przez program.
  */
 class pluginManager
 {

@@ -3,16 +3,23 @@
       <Lib Name="libInterp4Move.so"/>
       <Lib Name="libInterp4Rotate.so"/>
       <Lib Name="libInterp4Pause.so"/>
-      <Lib Name="libInterp4Set.so"/>
    </Plugins>
    <Objects>
-     <Cube Name="Podstawa1" Shift="0 0 0" Scale="1 1 1"
-                 RotXYZ_deg="10 0 0" Trans_m="0.1 0 0" RGB="0 0 255"/>
-     <Cube Name="Podstawa1.Ramie1" Shift="0.3 1.5 0" Scale="2 0.5 0.5"
-	                                                 Trans_m="1 0 1"/>
-     <Cube Name="Podstawa1.Ramie1.Ramie2" Shift="6 5 0"
-	         Scale="0.2 0.2 1" Trans_m="0 5 0" RGB="15 230 75" 
-           RotXYZ_deg="0 90 0"/>
+     <Cube Name="Head" Shift="0 0.0 0" Scale="1.2 1.0 1.0"
+                 RotXYZ_deg="0 0 0" Trans_m="0.0 0.0 0.0" RGB="252 107 3"/>
+     <Cube Name="Head.Ear1" Shift="0.125 0.125 -0.4" Scale="0.25 0.25 0.5" RotXYZ_deg="90 0 0"
+	                                                 Trans_m="0.25 0.1 0.65" RGB="255 255 255"/>
+     <Cube Name="Head.Ear2" Shift="0.125 0.125 -0.4" Scale="0.25 0.25 0.5" RotXYZ_deg="90 0 0"
+                                                    Trans_m="0.25 0.1 -0.65" RGB="255 255 255"/>
+     <Cube Name="Head.Caterpillar1" Shift="0 0.0 0" Scale="1.2 0.45 0.5"
+                 RotXYZ_deg="0 0 0" Trans_m="0.0 -0.6 -0.7" RGB="0 0 0"/>
+     <Cube Name="Head.Caterpillar2" Shift="0 0.0 0" Scale="1.2 0.45 0.5"
+                 RotXYZ_deg="0 0 0" Trans_m="0.0 -0.6 0.7" RGB="0 0 0"/>
+     <Cube Name="Head.Eye1" Shift="0 0.0 0" Scale="0.15 0.35 0.25"
+                 RotXYZ_deg="0 0 0" Trans_m="0.7 -0.2 0.25" RGB="255 255 255"/>
+    <Cube Name="Head.Eye2" Shift="0 0.0 0" Scale="0.15 0.35 0.25"
+                 RotXYZ_deg="0 0 0" Trans_m="0.7 -0.2 -0.25" RGB="255 255 255"/>
+	        
    </Objects>
   </Config>
   

@@ -41,9 +41,7 @@ const char *Interp4Set::GetObjName() const{
     return this->objectName.c_str();
 }
 
-bool Interp4Set::ExecCmd(AbstractScene &rScn,
-                         const char *sMobObjName,
-                         AbstractComChannel &rComChann)
+bool Interp4Set::ExecCmd(AbstractScene &rScn,AbstractComChannel &rComChann)
 {
     AbstractMobileObj *wObMob = rScn.FindMobileObj(this->objectName.c_str());
 
