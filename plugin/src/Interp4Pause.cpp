@@ -3,6 +3,7 @@
 
 #include "ComInterface.hh"
 #include "Interp4Pause.hh"
+#include "Vector3D.hh"
 
 extern "C"
 {

@@ -2,6 +2,8 @@
 
 #include "ComInterface.hh"
 #include "Interp4Set.hh"
+#include "Vector3D.hh"
+
 
 using std::cout;
 using std::endl;

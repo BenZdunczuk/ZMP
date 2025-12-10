@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Interp4Move.hh"
 #include "ComInterface.hh"
+#include "Vector3D.hh"
+
 
 using std::cout;
 using std::endl;

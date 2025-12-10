@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Interp4Rotate.hh"
 #include "ComInterface.hh"
+#include "Vector3D.hh"
+
 
 #define N 100       //ile krokow
 #define M 1000000    //czas jednego kroku w us
